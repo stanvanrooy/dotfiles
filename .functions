@@ -36,3 +36,13 @@ function diff() {
   git diff --no-index --color-word "$@";
 }
 
+function ta() {
+  for _pane in $(tmux list-panes -F '#P'); do
+    for var in "$@"; do
+      tmux send-keys -t ${_pane} $var;
+      tmux send-keys -t ${_pane} Space;
+    done;
+    tmux send-key -t ${_pane} Enter;
+  done;
+}
+
