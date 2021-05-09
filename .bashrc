@@ -14,8 +14,8 @@ if [ -f "/etc/bash_completion" ]; then
   source /etc/bash_completion;
 fi;
 
-# Enable tab completion for the g shortcut to git
-complete -o default -o nospace -F _git g;
+source /usr/share/bash-completion/completions/git
+__git_complete g __git_main
 
 if [ ! -f "$HOME/.bashrc" ]; then
   ln -s $HOME/.dotfiles/.bashrc $HOME/.bashrc
