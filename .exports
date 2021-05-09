@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+export EDITOR="vim";
+export PYTHONASYNCIODEBUG=1
+
+export MANPAGER="less -X";
+
+# Increase history size
+export HISTSIZE='32768';
+export HISTFILESIZE="${HISTSiZE}";
+# Ignore duplicates
+export HISTCONTROL="ignoreboth";
+
+export LANG='en_US.UTF-8';
+export LC_ALL='en_US.UTF-8';
+

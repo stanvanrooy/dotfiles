@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# System dependent
+alias eq-cd='cd ~/projects/Elfskot'
+colorflag="--color"
+
+# Easier navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../../"
+alias .....="cd ../../../../"
+
+# Shortcuts
+alias down="cd ~/Downloads"
+alias docs="cd ~/Documents"
+alias p="cd ~/projects"
+alias g="git"
+alias bashrc="vim ~/.dotfiles/.bashrc"
+
+# List in long format
+alias l="ls -lF ${colorflag}"
+# List all files
+alias la="ls -A ${colorflag}"
+# List all directories
+alias lsd="l | grep --color=never '^d'"
+# Use color output for ls
+alias ls="command ls ${colorflag}"
+
+# Colorize grep output
+alias grep="grep --color=auto"
+
+# Alias deprecated grep commands
+alias fgrep="grep -F"
+alias egrep="grep -E"
+
+# Allow aliases to be sudo'ed
+alias sudo='sudo '
+
+# Elfsquad shortcuts
+alias eq-api='eq-cd && cd src/Web/Elfskot.Api && dotnet run'
+alias eq-config-api='eq-cd && cd src/Web/Elfsquad.ConfiguratorApi && dotnet run'
+alias eq-auth='eq-cd && cd src/Web/Elfskot.Auth && dotnet run'
+alias eq-iems='eq-cd && cd src/IEMS/Elfskot.IEMS && dotnet run'
+alias eq-gateway='eq-cd && cd src/Web/Gateways/Elfsquad.Gateways.ApiGateway && dotnet run'
+alias eq-ui='eq-cd && cd src/Web/Elfskot.Web/ClientApp && ng serve --host ems.local --port 8090 -o'
+alias eq-all='(echo eq-api; echo eq-auth; echo eq-iems; echo eq-config-api; eq-ui) | env_parallel --lb'
+alias eq-web='(echo eq-api; echo eq-auth; echo eq-config-api; eq-ui) | env_parallel --lb'
+
+# Functions
+alias urlencode='python3 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+  alias "${method}"="lwp-request -m '${method}'"
+done
+
+alias path="echo -e ${PATH//:/\\n}"
+

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+function dotnet_bash_complete() {
+  local word=${COMP_WORDS[COMP_CWORD]}
+  local completions
+  completions="$(dotnet complete --position "${COMP_POINT}" "${COMP_LINE}" 2>/dev/null)"
+  if [ $? -ne 0 ]; then
+    completions=""
+  fi
+  COMPREPLY=( $(compgen -W "$completions" -- "$word") )
+}
+complete -f -F _dotnet_bash_complete dotnet
+
+function kp() {
+  sudo kill -9 $(sudo lsof -t -i:$1);
+}
+
+function mkd() {
+  mkdir -p "$@" && cd "$_";
+}
+
+function fs() {
+  if du -b /dev/null > /dev/null 2>&1; then
+    local arg=-sbh;
+  else
+    local arg=-sh;
+  fi;
+  if [[ -n "$@" ]]; then
+    du $arg -- "$@";
+  else
+    du $arg .[^.]* ./*;
+  fi;
+}
+
+function diff() {
+  git diff --no-index --color-word "$@";
+}
+
