@@ -14,11 +14,15 @@ alias .....="cd ../../../../"
 alias down="cd ~/Downloads"
 alias docs="cd ~/Documents"
 alias p="cd ~/projects"
-alias g="git"
 alias bashrc="vim ~/dotfiles/.bashrc"
 
+# Git shortcuts
+alias g="git"
+alias gap="git add -p"
+
 # List in long format
-alias l="ls -lF ${colorflag}"
+alias l="ls ${colorflag}"
+alias ll="ls -lF ${colorflag}"
 # List all files
 alias la="ls -A ${colorflag}"
 # List all directories

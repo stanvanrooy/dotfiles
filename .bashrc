@@ -30,3 +30,8 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 fi;
 
 git config --global core.excludesFile '$HOME/dotfiles/.gitignore.global'
+
+# WSL config
+if egrep -qi "Microsoft|WSL" /proc/version; then
+  dbus-launch --exit-with-x11 > /dev/null
+fi;
