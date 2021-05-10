@@ -45,7 +45,7 @@ set shiftwidth=2
 " Enable relative line numbers
 set relativenumber
 " Centralize backups, swp files and undo history
-set backupdir=~/.dotfiles/.vim/backups
-set directory=~/.dotfiles/.vim/swaps
-set undodir=~/.dotfiles/.vim/undos
+set backupdir=~/dotfiles/.vim/backups
+set directory=~/dotfiles/.vim/swaps
+set undodir=~/dotfiles/.vim/undos
 
