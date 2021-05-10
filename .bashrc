@@ -35,3 +35,4 @@ git config --global core.excludesFile '$HOME/dotfiles/.gitignore.global'
 if egrep -qi "Microsoft|WSL" /proc/version; then
   dbus-launch --exit-with-x11 > /dev/null
 fi;
+. `which env_parallel.bash`
