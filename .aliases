@@ -30,6 +30,9 @@ alias lsd="l | grep --color=never '^d'"
 # Use color output for ls
 alias ls="command ls ${colorflag}"
 
+# Get ip4 address
+alias ip4="hostname -I | awk '{print \$1}'"
+
 # Colorize grep output
 alias grep="grep --color=auto"
 
