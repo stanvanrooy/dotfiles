@@ -44,7 +44,7 @@ set directory=~/dotfiles/.vim/swaps
 set undodir=~/dotfiles/.vim/undos
 
 " coc.nvim setup
-let g:coc_global_extensions = ['coc-json', 'coc-json', 'coc-tslint', 'coc-html', 'coc-angular', 'coc-clangd', 'coc-git', 'coc-go', 'coc-cmake', 'coc-html-css-support', 'coc-python', 'coc-sh', 'coc-omnisharp']
+let g:coc_global_extensions = ['coc-json', 'coc-json', 'coc-tslint', 'coc-html', 'coc-angular', 'coc-clangd', 'coc-git', 'coc-go', 'coc-cmake', 'coc-html-css-support', 'coc-pyright', 'coc-sh', 'coc-omnisharp']
 
 set updatetime=300
 set shortmess+=c
