@@ -42,6 +42,7 @@ set relativenumber
 set backupdir=~/dotfiles/.vim/backups
 set directory=~/dotfiles/.vim/swaps
 set undodir=~/dotfiles/.vim/undos
+set undofile
 
 " coc.nvim setup
 let g:coc_global_extensions = ['coc-json', 'coc-json', 'coc-tslint', 'coc-html', 'coc-angular', 'coc-clangd', 'coc-git', 'coc-go', 'coc-cmake', 'coc-html-css-support', 'coc-pyright', 'coc-sh', 'coc-omnisharp']
