@@ -15,6 +15,10 @@ function kp() {
   sudo kill -9 $(sudo lsof -t -i:$1);
 }
 
+function gp() {
+  sudo lsof -t -i:$1
+}
+
 function mkd() {
   mkdir -p "$@" && cd "$_";
 }
