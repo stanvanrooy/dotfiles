@@ -45,7 +45,7 @@ set undodir=~/dotfiles/.vim/undos
 set undofile
 
 " coc.nvim setup
-let g:coc_global_extensions = ['coc-json', 'coc-json', 'coc-tslint', 'coc-html', 'coc-angular', 'coc-clangd', 'coc-git', 'coc-go', 'coc-cmake', 'coc-html-css-support', 'coc-pyright', 'coc-sh', 'coc-omnisharp', 'coc-tsserver']
+let g:coc_global_extensions = ['coc-json', 'coc-json', 'coc-tslint', 'coc-html', 'coc-angular', 'coc-clangd', 'coc-git', 'coc-go', 'coc-cmake', 'coc-html-css-support', 'coc-pyright', 'coc-sh', 'coc-tsserver']
 
 set updatetime=300
 set shortmess+=c
