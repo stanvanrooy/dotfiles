@@ -5,6 +5,8 @@ export PYTHONASYNCIODEBUG=1
 
 export MANPAGER="less -X";
 
+export GPG_TTY=$(tty)
+
 # Increase history size
 export HISTSIZE='32768';
 export HISTFILESIZE="${HISTSiZE}";

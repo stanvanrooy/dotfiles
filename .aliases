@@ -58,6 +58,8 @@ alias eq-web='(echo eq-api; echo eq-auth; echo eq-config-api; eq-ui) | env_paral
 # Functions
 alias urlencode='python3 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
+alias nuget="mono /usr/local/bin/nuget.exe"
+
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "${method}"="lwp-request -m '${method}'"
 done
