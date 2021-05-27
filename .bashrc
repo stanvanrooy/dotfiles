@@ -29,6 +29,10 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
   ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 fi;
 
+if [ ! -f "$HOME/.gitconfig" ]; then
+  ln -s $HOME/dotfiles/.gitconfig $HOME/.gitconfig
+fi;
+
 git config --global core.excludesFile '$HOME/dotfiles/.gitignore.global'
 
 # WSL config
