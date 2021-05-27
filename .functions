@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function dotnet_bash_complete() {
+function _dotnet_bash_complete() {
   local word=${COMP_WORDS[COMP_CWORD]}
   local completions
   completions="$(dotnet complete --position "${COMP_POINT}" "${COMP_LINE}" 2>/dev/null)"
