@@ -7,3 +7,4 @@
 	excludesFile = $HOME/dotfiles/.gitignore.global
 [commit]
   gpgsign = true
+
