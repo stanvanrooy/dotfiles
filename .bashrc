@@ -21,6 +21,7 @@ if [ ! -f "$HOME/.bashrc" ]; then
   ln -s $HOME/dotfiles/.bashrc $HOME/.bashrc
 fi;
 
+
 if [ ! -f "$HOME/.vimrc" ]; then
   ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
 fi;
@@ -40,3 +41,4 @@ if egrep -qi "Microsoft|WSL" /proc/version; then
   dbus-launch --exit-with-x11 > /dev/null
 fi;
 . `which env_parallel.bash`
+

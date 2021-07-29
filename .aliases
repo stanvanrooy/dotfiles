@@ -20,6 +20,9 @@ alias bashrc="vim ~/dotfiles/.bashrc"
 alias g="git"
 alias gap="git add -p"
 
+
+alias k="kubectl"
+
 # List in long format
 alias l="ls ${colorflag}"
 alias ll="ls -lF ${colorflag}"
