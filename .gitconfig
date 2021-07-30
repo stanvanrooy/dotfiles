@@ -1,10 +1,7 @@
 [user]
 	email = stan@rooy.dev
 	name = Stan van Rooy
-  signingKey = 4ADB9C618A361DE1
 [core]
 	editor = vim
 	excludesFile = $HOME/dotfiles/.gitignore.global
-[commit]
-  gpgsign = true
 

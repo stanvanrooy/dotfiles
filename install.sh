@@ -10,23 +10,24 @@ sudo apt install tmux -y
 sudo apt install guake -y
 
 # required for coc-nvim
-sudo apt install node -y
+sudo apt install vim -y
+sudo apt install nodejs -y
 
 # install vim plugins
 rm "$HOME/.vimrc"
 ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
 
-sudo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-sudo vim +PluginInstall +qall
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
 
 # install tmux plugins
 rm "$HOME/.tmux.conf"
 ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 
-sudo git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 # set up guake
-guake --restore-preferences ~/dotfiles/.guake
+guake --restore-preferences $HOME/dotfiles/.guake
 source $HOME/.bashrc
 
