@@ -15,12 +15,13 @@ alias down="cd ~/Downloads"
 alias docs="cd ~/Documents"
 alias p="cd ~/projects"
 alias bashrc="vim ~/dotfiles/.bashrc"
+alias clr=clear
 
-# Git shortcuts
+# Git
 alias g="git"
 alias gap="git add -p"
 
-
+# Kubectl
 alias k="kubectl"
 
 # List in long format
