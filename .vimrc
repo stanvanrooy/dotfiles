@@ -17,6 +17,8 @@ Plugin 'Shirk/vim-gas'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'peitalin/vim-jsx-typescript'
+Plugin 'evanleck/vim-svelte'
+Plugin 'codechips/coc-svelte', {'do': 'npm install'}
 
 call vundle#end()
 filetype plugin indent on
@@ -44,8 +46,13 @@ set directory=~/dotfiles/.vim/swaps
 set undodir=~/dotfiles/.vim/undos
 set undofile
 
+set textwidth=72
+
 " coc.nvim setup
-let g:coc_global_extensions = ['coc-json', 'coc-json', 'coc-tslint', 'coc-html', 'coc-angular', 'coc-clangd', 'coc-git', 'coc-go', 'coc-cmake', 'coc-html-css-support', 'coc-pyright', 'coc-sh', 'coc-tsserver']
+let g:coc_global_extensions = ['coc-json', 'coc-json', 'coc-tslint', 'coc-html', 'coc-angular', 'coc-clangd', 'coc-git', 'coc-go', 'coc-cmake', 'coc-html-css-support', 'coc-pyright', 'coc-sh', 'coc-tsserver', 'coc-clangd']
+
+let g_svelte_preprocessor_tags = [{'name': 'postcss', 'tag': 'style', 'as': 'scss' }]
+let g:svelte_preprocessors = ['typescript', 'postcss']
 
 set updatetime=300
 set shortmess+=c
@@ -68,6 +75,9 @@ inoremap <silent><expr> <c-@> coc#refresh()
 
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" map filetypes
+autocmd BufEnter *.svelte :setlocal filetype=svelte
 
 " go to shortcuts
 nmap <silent> gd <Plug>(coc-definition)

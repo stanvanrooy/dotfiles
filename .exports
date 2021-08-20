@@ -16,7 +16,6 @@ export HISTCONTROL="ignoreboth";
 export LANG='en_US.UTF-8';
 export LC_ALL='en_US.UTF-8';
 
-export PATH=$PATH:$(go env GOPATH)/bin
 
 # WSL config
 if egrep -qi "Microsoft|WSL" /proc/version; then
@@ -24,6 +23,3 @@ if egrep -qi "Microsoft|WSL" /proc/version; then
   export LIBGL_ALWAYS_INDIRECT=1
 fi;
 
-# go
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/dotfiles/scripts
