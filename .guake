@@ -30,7 +30,7 @@ window-refocus=false
 window-tabbar=false
 window-vertical-displacement=0
 window-walignment=100
-window-width=50
+window-width=49
 
 [style/background]
 transparency=100
