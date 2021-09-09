@@ -3,6 +3,7 @@
 export EDITOR="vim";
 export PYTHONASYNCIODEBUG=1
 
+export DOTNET_ROOT=$HOME/.dotnet
 export MANPAGER="less -X";
 
 export GPG_TTY=$(tty)

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export PATH=~/.dotnet:$PATH
+export PATH=~/.dotnet/tools:$PATH
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/dotfiles/scripts
