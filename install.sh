@@ -34,6 +34,10 @@ ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
+# install nodejs
+curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt install -y nodejs
+
 # build coc.nvim
 cd $HOME/.vim/bundle/coc.nvim/
 sudo npm i -g yarn
