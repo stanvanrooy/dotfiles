@@ -45,3 +45,7 @@ if egrep -qi "Microsoft|WSL" /proc/version; then
 fi;
 . `which env_parallel.bash`
 
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    tmux attach -t default || tmux new -s default
+fi
+

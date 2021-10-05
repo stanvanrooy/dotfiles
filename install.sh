@@ -7,7 +7,6 @@ fi;
 sudo apt install parallel -y
 sudo apt install git -y
 sudo apt install tmux -y
-sudo apt install guake -y
 
 # required for coc-nvim
 sudo apt install vim -y
@@ -44,7 +43,5 @@ sudo npm i -g yarn
 yarn install
 yarn build
 
-# set up guake
-guake --restore-preferences $HOME/dotfiles/.guake
 source $HOME/dotfiles/.bashrc
 

@@ -109,7 +109,7 @@ PS1+="\[${green}\]📁 \w"; # working directory full path
 PS1+="\$(prompt_git \"\[${white}\] on 🌿 \[${violet}\]\" \"\[${blue}\]\")"; # Git repository details
 PS1+="\n\[${white}\]|->   \[${reset}\]";
 export PS1;
-echo $PS1 > ~/ps1
 
 PS2="\[${yellow}\]→ \[${reset}\]";
 export PS2;
+
