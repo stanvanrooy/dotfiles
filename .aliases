@@ -19,6 +19,9 @@ alias os="cd ~/projects/opensource"
 alias bashrc="vim ~/dotfiles/.bashrc"
 alias clr=clear
 
+# Zet
+alias zc="cd $HOME/zet"
+
 # Git
 alias g="git"
 alias gap="git add -p"
