@@ -52,9 +52,10 @@ function ta() {
 
 function z() {
   d=$(date +'%Y%m%d%H%M%S')
+  mkdir $HOME/zet/$d
   vim $HOME/zet/$d/README.md
-  git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet  add $d
-  git commit --git-dir=$HOME/zet/.git --work-tree=$HOME/zet
+  git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet add $d
+  git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet commit
 }
 
 source <(kubectl completion bash)
