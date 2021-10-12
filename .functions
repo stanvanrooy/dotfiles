@@ -53,6 +53,7 @@ function ta() {
 function zetinit() {
   d=$(date +'%Y%m%d%H%M%S')
   mkdir $d
+  touch $d/README.md
 }
 
 source <(kubectl completion bash)
