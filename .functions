@@ -52,10 +52,16 @@ function ta() {
 
 function z() {
   d=$(date +'%Y%m%d%H%M%S')
-  mkdir $HOME/zet/$d
-  vim $HOME/zet/$d/README.md
-  git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet add $d
-  git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet commit
+  base_dir=$HOME/zet/$d
+  mkdir $base_dir
+  vim $base_dir/README.md
+  # delete directory if no file exists
+  if [ ! -f "$base_dir/README.md" ]; then
+    rm -r $base_dir
+  else
+    git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet add $d
+    git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet commit
+  fi
 }
 
 source <(kubectl completion bash)
