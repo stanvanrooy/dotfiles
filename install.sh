@@ -24,6 +24,7 @@ if [ ! -f "$HOME/.config/i3/config" ]; then
   ln -s $HOME/dotfiles/i3.conf $HOME/.config/i3/config
 fi;
 
+git clone git@github.com:stanvanrooy/zet.git $HOME/zet
 
 # install dependencies
 sudo apt install parallel -y
