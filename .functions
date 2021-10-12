@@ -50,5 +50,10 @@ function ta() {
   done;
 }
 
+function zetinit() {
+  d=$(date +'%Y%m%d%H%M%S')
+  mkdir $d
+}
+
 source <(kubectl completion bash)
 complete -F __start_kubectl k

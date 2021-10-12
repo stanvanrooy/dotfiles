@@ -45,7 +45,3 @@ if egrep -qi "Microsoft|WSL" /proc/version; then
 fi;
 . `which env_parallel.bash`
 
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
-fi
-
