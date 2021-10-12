@@ -51,10 +51,12 @@ function ta() {
 }
 
 function zetinit() {
+  cd $HOME/zet
   d=$(date +'%Y%m%d%H%M%S')
   mkdir $d
-  touch $d/README.md
-  vim $d/README.md
+  cd $d
+  touch README.md
+  vim README.md
 }
 
 source <(kubectl completion bash)
