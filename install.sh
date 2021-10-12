@@ -3,6 +3,28 @@ if [ ! -s "/etc/machine-id" ]; then
   dbus-uuidgen > /etc/machine-id
 fi;
 
+# create symlinks if they do not exists
+if [ ! -f "$HOME/.bashrc" ]; then
+  ln -s $HOME/dotfiles/.bashrc $HOME/.bashrc
+fi;
+
+if [ ! -f "$HOME/.vimrc" ]; then
+  ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
+fi;
+
+if [ ! -f "$HOME/.tmux.conf" ]; then
+  ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
+fi;
+
+if [ ! -f "$HOME/.gitconfig" ]; then
+  ln -s $HOME/dotfiles/.gitconfig $HOME/.gitconfig
+fi;
+
+if [ ! -f "$HOME/.config/i3/config" ]; then
+  ln -s $HOME/dotfiles/i3.conf $HOME/.config/i3/config
+fi;
+
+
 # install dependencies
 sudo apt install parallel -y
 sudo apt install git -y
