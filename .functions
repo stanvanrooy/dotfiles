@@ -50,7 +50,7 @@ function ta() {
   done;
 }
 
-function zetinit() {
+function z() {
   d=$HOME/zet/$(date +'%Y%m%d%H%M%S')
   mkdir $d
   touch $d/README.md
@@ -59,3 +59,4 @@ function zetinit() {
 
 source <(kubectl completion bash)
 complete -F __start_kubectl k
+
