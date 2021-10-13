@@ -24,7 +24,17 @@ if [ ! -f "$HOME/.config/i3/config" ]; then
   ln -s $HOME/dotfiles/i3.conf $HOME/.config/i3/config
 fi;
 
-git clone git@github.com:stanvanrooy/zet.git $HOME/zet
+if [ ! -f "$HOME/.vimrc" ]; then
+  ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
+fi
+
+if [ ! -f "$HOME/.tmux.conf" ]; then
+  ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
+fi
+
+if [ ! -d "$HOME/zet" ]; then
+  git clone git@github.com:stanvanrooy/zet.git $HOME/zet
+fi
 
 # install dependencies
 sudo apt install parallel -y
@@ -32,33 +42,41 @@ sudo apt install git -y
 sudo apt install tmux -y
 
 # required for coc-nvim
-sudo apt install vim -y
-sudo apt install nodejs -y
+if [ ! $(which vim) ]; then
+  sudo apt install vim -y
+fi
 
-# install vim plugins
-rm "$HOME/.vimrc"
-ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
+if [ ! $(which vim) ]; then
+  sudo apt install nodejs -y
+fi
 
 # install go
-sudo tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
+if [ ! $(which go) ]; then
+  sudo tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
+fi
 
 # install kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+if [ ! $(which kubectl) ]; then
+  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+fi
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
+if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
+  git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+  vim +PluginInstall +qall
+fi
 
 # install tmux plugins
-rm "$HOME/.tmux.conf"
-ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
-
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-~/.tmux/plugins/tpm/scripts/install_plugins.sh
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+fi
 
 # install nodejs
-curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-sudo apt install -y nodejs
+if [ ! $(which node) ]; then
+  curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+  sudo apt install -y nodejs
+fi
 
 # build coc.nvim
 cd $HOME/.vim/bundle/coc.nvim/
