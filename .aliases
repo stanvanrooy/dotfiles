@@ -74,4 +74,5 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 done
 
 alias path="echo -e ${PATH//:/\\n}"
+alias qemu='qemu-system-x86_64'
 

@@ -17,6 +17,8 @@ export HISTCONTROL="ignoreboth";
 export LANG='en_US.UTF-8';
 export LC_ALL='en_US.UTF-8';
 
+export CLIP_DIR="$HOME/Videos/Clips"
+export CLIP_DATA="$HOME/.config/clip/data"
 
 # WSL config
 if egrep -qi "Microsoft|WSL" /proc/version; then

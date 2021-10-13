@@ -18,6 +18,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'evanleck/vim-svelte'
+Plugin 'puremourning/vimspector'
 Plugin 'codechips/coc-svelte', {'do': 'npm install'}
 
 call vundle#end()
@@ -97,4 +98,6 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+let g:vimspector_enable_mappings='HUMAN'
 
