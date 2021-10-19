@@ -64,6 +64,11 @@ function z() {
   fi
 }
 
+function rh() {
+  git checkout $1
+  git reset --hard origin/$1
+}
+
 source <(kubectl completion bash)
 complete -F __start_kubectl k
 
