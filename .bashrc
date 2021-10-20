@@ -25,3 +25,5 @@ if egrep -qi "Microsoft|WSL" /proc/version; then
 fi;
 . `which env_parallel.bash`
 
+neofetch
+
