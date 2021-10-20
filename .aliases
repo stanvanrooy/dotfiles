@@ -76,3 +76,6 @@ done
 alias path="echo -e ${PATH//:/\\n}"
 alias qemu='qemu-system-x86_64'
 
+alias neofetch='fastfetch'
+
+
