@@ -6,4 +6,5 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/dotfiles/scripts
 export PATH=$PATH:/opt/node-v14.18.0-linux-x64/bin
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 
