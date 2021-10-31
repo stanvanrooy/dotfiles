@@ -1,0 +1,77 @@
+#!/bin/bash
+set -e
+ip=$(curl -s ifconfig.me)
+echo "My ip is: $ip"
+
+loc=$(curl -s http://ip-api.com/json/$ip)
+country=$(echo $loc | jq -r '.country')
+city=$(echo $loc | jq -r '.city')
+echo "My location is: $country - $city"
+
+url="http://api.weatherapi.com/v1/forecast.json?key=5d69e7e03a384e619b3124640213110&days=1&aqi=yes&alerts=yes&q=$country,$city"
+weather=$(curl -s $url)
+
+current_temp=$(echo $weather | jq -r '.current.temp_c')
+current_fl=$(echo $weather| jq -r '.current.feelslike_c')
+current_aqi=$(echo $weather| jq -r '.current.air_quality["us-epa-index"]')
+
+max_temp=$(echo $weather | jq -r '.forecast.forecastday[0].day.maxtemp_c')
+min_temp=$(echo $weather | jq -r '.forecast.forecastday[0].day.mintemp_c')
+avg_temp=$(echo $weather | jq -r '.forecast.forecastday[0].day.avgtemp_c')
+condition=$(echo $weather | jq -r '.forecast.forecastday[0].day.condition.text')
+sunset=$(echo $weather | jq -r '.forecast.forecastday[0].astro.sunset')
+
+alerts=$(echo $weather | jq -r '.alerts.alert[] | @base64')
+alerts_body=""
+for alert in $alerts; do
+  alert=$(echo $alert | base64 --decode)
+  headline=$(echo $alert | jq -r '.headline')
+  event=$(echo $alert | jq -r '.event')
+  description=$(echo $alert | jq -r '.desc' | sed 's/;/<br \/>/g')
+  alerts_body+="<li>$headline - $event <br /> $description</li>"
+done
+
+subject="The weather for today (${condition,,})"
+
+body="
+<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+<html>
+  <head>
+    <style>
+      body {
+        background: #f7f7f7;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Times New Roman', Times, serif;
+      }
+
+      p {
+        font-family: Tahoma,Verdana,Segoe,sans-serif; 
+      }
+    </style>
+  </head>
+  <body>
+    <h1>$subject</h1>
+
+    <p>
+    Currently, it is <b>$current_temp °C</b> and it feels like <b>
+    $current_fl °C</b>. The AQI is $current_aqi(<a href=\"https://pbs
+    .twimg.com/media/DgSQQJSU8AArC0-.jpg:large\">info</a>). Enjoy your day!
+    </p>
+
+    <h2>The day in  numbers</h2>
+    <ul>
+      <li>Average: $avg_temp °C</li>
+      <li>Minimum: $min_temp °C</li>
+      <li>Maximum: $max_temp °C</li>
+      <li>Sunset: $sunset</li>
+    </ul>
+
+    <h2>Weather alerts</h2>
+    <ul>$alerts_body</ul>
+  </body>
+</html>"
+
+echo -e "$body" | mail -s "$(echo -e "$subject \nContent-Type: text/html\nMime-Version: 1.0")" -r stanvanrooy6@gmail.com stanvanrooy6@gmail.com
+
