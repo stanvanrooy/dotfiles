@@ -84,5 +84,8 @@ sudo npm i -g yarn
 yarn install
 yarn build
 
+# install jq
+sudo apt install -y jq
+
 source $HOME/dotfiles/.bashrc
 
