@@ -4,4 +4,6 @@
 [core]
 	editor = vim
 	excludesFile = $HOME/dotfiles/.gitignore.global
+[commit]
+  gpgsign = true
 

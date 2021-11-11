@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # System dependent
-alias eq-cd='cd ~/projects/Elfskot'
 colorflag="--color"
 
 # Easier navigation
@@ -52,18 +51,6 @@ alias egrep="grep -E"
 # Allow aliases to be sudo'ed
 alias sudo='sudo '
 
-# Elfsquad shortcuts
-alias eq-build-sjs='eq-cd && cd src/Web/Elfsquad.SharedJavascript/Angular && npm i && ng build'
-alias eq-build-ui='eq-build-sjs && eq-cd && cd src/Web/Elfskot.Web/ClientApp && npm i'
-alias eq-api='eq-cd && cd src/Web/Elfskot.Api && dotnet run'
-alias eq-config-api='eq-cd && cd src/Web/Elfsquad.ConfiguratorApi && dotnet run'
-alias eq-auth='eq-cd && cd src/Web/Elfskot.Auth && dotnet run'
-alias eq-iems='eq-cd && cd src/IEMS/Elfskot.IEMS && dotnet run'
-alias eq-gateway='eq-cd && cd src/Web/Gateways/Elfsquad.Gateways.ApiGateway && dotnet run'
-alias eq-ui='eq-cd && cd src/Web/Elfskot.Web/ClientApp && ng serve --host ems.local --port 8090 -o'
-alias eq-all='(echo eq-api; echo eq-auth; echo eq-iems; echo eq-config-api; eq-ui) | env_parallel --session --lb'
-alias eq-web='(echo eq-api; echo eq-auth; echo eq-config-api; eq-ui) | env_parallel --session --lb'
-
 # Functions
 alias urlencode='python3 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
@@ -77,5 +64,4 @@ alias path="echo -e ${PATH//:/\\n}"
 alias qemu='qemu-system-x86_64'
 
 alias neofetch='fastfetch'
-
 
