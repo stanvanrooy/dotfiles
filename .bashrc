@@ -6,10 +6,6 @@ source $HOME/dotfiles/.bash_prompt
 source $HOME/dotfiles/.aliases
 source $HOME/dotfiles/.functions
 
-if [[ -d $HOME/elfsquad ]]; then
-  source $HOME/elfsquad/init.sh
-fi
-
 shopt -s nocaseglob;
 shopt -s histappend;
 shopt -s cdspell;
