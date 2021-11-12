@@ -19,6 +19,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'evanleck/vim-svelte'
 Plugin 'puremourning/vimspector'
+Plugin 'github/copilot.vim'
 Plugin 'codechips/coc-svelte', {'do': 'npm install'}
 
 call vundle#end()
