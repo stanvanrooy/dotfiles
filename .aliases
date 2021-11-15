@@ -65,5 +65,5 @@ alias qemu='qemu-system-x86_64'
 
 alias neofetch='fastfetch'
 
-source $HOME/elfsquad/devstack/.aliases
+cd $HOME/elfsquad/devstack/ && source .aliases && cd -
 
