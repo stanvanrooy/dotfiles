@@ -41,6 +41,8 @@ brew install azure-cli
 brew install node@16
 brew install bash-completion@2
 brew install nvim
+brew install docker
+brew install docker-compose
 
 # Install vim plugins
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
