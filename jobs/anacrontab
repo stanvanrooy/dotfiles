@@ -1,5 +1,0 @@
-#!/bin/sh
-SHELL=/bin/bash
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
-1 0 cron.daily run-parts $HOME/.local/etc/cron.daily/
-

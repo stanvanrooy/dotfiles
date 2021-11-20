@@ -14,18 +14,12 @@ if [ -f "/etc/bash_completion" ]; then
   source /etc/bash_completion;
 fi;
 
-source /usr/share/bash-completion/completions/git
+source $(brew --prefix)/etc/bash_completion
 __git_complete g __git_main
 
 git config --global core.excludesFile '$HOME/dotfiles/.gitignore.global'
 
-# WSL config
-if egrep -qi "Microsoft|WSL" /proc/version; then
-  dbus-launch --exit-with-x11 > /dev/null
-fi;
-. `which env_parallel.bash`
-
-if [ -x neofetch ]; then
-  neofetch
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    tmux attach -t default || tmux new -s default
 fi
 

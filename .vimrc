@@ -18,7 +18,6 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'evanleck/vim-svelte'
-Plugin 'puremourning/vimspector'
 Plugin 'github/copilot.vim'
 Plugin 'codechips/coc-svelte', {'do': 'npm install'}
 
@@ -51,10 +50,7 @@ set undofile
 set textwidth=72
 
 " coc.nvim setup
-let g:coc_global_extensions = ['coc-json', 'coc-json', 'coc-tslint', 'coc-html', 'coc-angular', 'coc-clangd', 'coc-git', 'coc-go', 'coc-cmake', 'coc-html-css-support', 'coc-pyright', 'coc-sh', 'coc-tsserver', 'coc-clangd']
-
-let g_svelte_preprocessor_tags = [{'name': 'postcss', 'tag': 'style', 'as': 'scss' }]
-let g:svelte_preprocessors = ['typescript', 'postcss']
+let g:coc_global_extensions = ['coc-tslint', 'coc-html', 'coc-angular', 'coc-cmake', 'coc-html-css-support', 'coc-sh', 'coc-tsserver']
 
 set updatetime=300
 set shortmess+=c
@@ -100,5 +96,4 @@ function! s:show_documentation()
   endif
 endfunction
 
-let g:vimspector_enable_mappings='HUMAN'
 

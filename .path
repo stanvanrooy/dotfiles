@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
-export PATH=~/.dotnet:$PATH
-export PATH=~/.dotnet/tools:$PATH
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/dotfiles/scripts
-export PATH=$PATH:/opt/node-v14.18.0-linux-x64/bin
-export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+export PATH=$HOME/.dotnet:$PATH
+export PATH=$HOME/.dotnet/tools:$PATH
+export PATH=$HOME/dotfiles/scripts:$PATH
+export PATH=/opt/homebrew/bin:$PATH
 
