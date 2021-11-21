@@ -62,5 +62,17 @@ if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   $HOME/.tmux/plugins/tpm/scripts/install_plugins.sh
 fi
 
+# Install completions
+sudo curl \
+  -L https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/bash/docker-compose \
+  -o /opt/homebrew/etc/bash_completion.d/docker-compose
+curl \
+  -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker \
+  -o /opt/homebrew/etc/bash_completion.d/docker
+curl \
+  -L https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion \
+  -o /opt/homebrew/etc/bash_completion.d/az
+kubectl completion bash > /opt/homebrew/etc/bash_completion.d/kubectl
+
 source $HOME/dotfiles/.bashrc
 

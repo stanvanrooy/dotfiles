@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+function _dotnet_bash_complete() {
+  local word=${COMP_WORDS[COMP_CWORD]}
+  local completions
+  completions="$(dotnet complete --position "${COMP_POINT}" "${COMP_LINE}" 2>/dev/null)"
+  if [ $? -ne 0 ]; then
+    completions=""
+  fi
+  COMPREPLY=( $(compgen -W "$completions" -- "$word") )
+}
+complete -f -F _dotnet_bash_complete dotnet
+
+function _makefile_complete {
+    local curr_arg;
+    local targets;
+
+    targets=''
+    if [[ -e "$(pwd)/Makefile" ]]; then
+        targets=$( \
+            grep -oE '^[a-zA-Z0-9_-]+:' Makefile \
+            | sed 's/://' \
+            | tr '\n' ' ' \
+        )
+    fi
+
+    curr_arg=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "${targets[@]}" -- $curr_arg ) );
+}
+complete -F _makefile_complete make
+
