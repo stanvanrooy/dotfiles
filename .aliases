@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # System dependent
-colorflag="--color"
+colorflag="-G"
 
 # Easier navigation
 alias ..="cd .."

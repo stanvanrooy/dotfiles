@@ -19,4 +19,5 @@ export LC_ALL='en_US.UTF-8';
 
 export CLIP_DIR="$HOME/Videos/Clips"
 export CLIP_DATA="$HOME/.config/clip/data"
+export LSCOLORS="gxBxhxDxfxhxhxhxhxcxcx"
 
