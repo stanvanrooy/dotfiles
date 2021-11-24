@@ -24,6 +24,13 @@ function fs() {
   fi;
 }
 
+function fr() {
+  # argument 1 contains the directory to search in 
+  # argument 2 is the regex string to replace
+  # argument 3 is the replacement string
+  find "$1" -type f -regex "$2" -exec sed -i '' -e "$3" {} +
+}
+
 function diff() {
   git diff --no-index --color-word "$@";
 }
