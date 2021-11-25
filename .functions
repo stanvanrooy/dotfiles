@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 function kp() {
+  # kill process that is running on port $1
   sudo kill -9 $(sudo lsof -t -i:$1);
 }
 
 function gp() {
+  # get process that is running on port $1
   sudo lsof -t -i:$1
 }
 
 function mkd() {
+  # make directory $1 and enter it
   mkdir -p "$@" && cd "$_";
 }
 
 function fs() {
+  # get file of current directory and descendants with size
   if du -b /dev/null > /dev/null 2>&1; then
     local arg=-sbh;
   else
@@ -36,6 +40,7 @@ function diff() {
 }
 
 function ta() {
+  # excecute command in all tmux panes
   for _pane in $(tmux list-panes -F '#P'); do
     for var in "$@"; do
       tmux send-keys -t ${_pane} $var;
@@ -46,6 +51,7 @@ function ta() {
 }
 
 function z() {
+  # create new zet file
   d=$(date +'%Y%m%d%H%M%S')
   base_dir=$HOME/zet/$d
   mkdir $base_dir
@@ -60,10 +66,8 @@ function z() {
 }
 
 function rh() {
+  # reset hard to branch $1
   git checkout $1
   git reset --hard origin/$1
 }
-
-source <(kubectl completion bash)
-complete -F __start_kubectl k
 
