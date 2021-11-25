@@ -6,8 +6,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-" c# language server
-Plugin 'Omnisharp/omnisharp-vim'
 " beautifull colorschemes
 Plugin 'flazz/vim-colorschemes'
 " temporarily highlights the line vim moves to after a search
@@ -86,7 +84,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 " map K to show docs
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -96,4 +93,7 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+" spell check for markdown, asciidoc & git commit messages
+autocmd BufRead,BufNewFile *.md,*.adoc,*.txt,*.git-commit :set spell spelllang=en_us
 
