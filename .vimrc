@@ -6,20 +6,21 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
+" c# language server
 Plugin 'Omnisharp/omnisharp-vim'
+" beautifull colorschemes
 Plugin 'flazz/vim-colorschemes'
+" temporarily highlights the line vim moves to after a search
 Plugin 'inside/vim-search-pulse'
+" beautifull bottom bar in the editor
 Plugin 'vim-airline/vim-airline'
+" highlight all other occurences of a search term
 Plugin 'RRethy/vim-illuminate'
+" syntax highlighting
 Plugin 'neoclide/coc.nvim'
-Plugin 'Shirk/vim-gas'
+" easy navigation between vim and tmux
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'peitalin/vim-jsx-typescript'
-Plugin 'evanleck/vim-svelte'
 Plugin 'github/copilot.vim'
-Plugin 'codechips/coc-svelte', {'do': 'npm install'}
 
 call vundle#end()
 filetype plugin indent on
@@ -27,10 +28,10 @@ filetype plugin indent on
 " Map ctrl + o to open file explorer
 map <C-o> :NERDTreeToggle<CR>
 
-colorscheme apprentice
+colorscheme zenburn
 set tags=./tags,tags;$HOME
 
-" Use the OS clipboard
+" Use the OS's clipboard
 set clipboard=unnamed
 " Optimize for fast terminal connections
 set ttyfast
@@ -95,5 +96,4 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
-
 
