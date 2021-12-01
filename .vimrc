@@ -3,8 +3,10 @@ filetype off
 syntax on
 
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp^=~/projects/coc-pyre/
 call vundle#begin()
 
+Plugin 'OmniSharp/omnisharp-vim'
 Plugin 'gmarik/Vundle.vim'
 " beautifull colorschemes
 Plugin 'flazz/vim-colorschemes'
@@ -49,7 +51,7 @@ set undofile
 set textwidth=72
 
 " coc.nvim setup
-let g:coc_global_extensions = ['coc-tslint', 'coc-html', 'coc-angular', 'coc-cmake', 'coc-html-css-support', 'coc-sh', 'coc-tsserver']
+let g:coc_global_extensions = ['coc-tslint', 'coc-html', 'coc-angular', 'coc-cmake', 'coc-html-css-support', 'coc-sh', 'coc-tsserver'] 
 
 set updatetime=300
 set shortmess+=c

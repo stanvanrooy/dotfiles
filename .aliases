@@ -67,6 +67,6 @@ alias neofetch='fastfetch'
 
 eqdir="$HOME/elfsquad/devstack/"
 if [ -d $eqdir ]; then
-  cd $eqdir && source .aliases && cd -
+  source $eqdir/.aliases
 fi
 
