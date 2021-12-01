@@ -65,8 +65,7 @@ alias qemu='qemu-system-x86_64'
 
 alias neofetch='fastfetch'
 
-eqdir="$HOME/elfsquad/devstack/"
+eqdir=/Users/stanvanrooy/elfsquad/devstack
 if [ -d $eqdir ]; then
-  source $eqdir/.aliases
+  source $eqdir/.aliases $eqdir
 fi
-
