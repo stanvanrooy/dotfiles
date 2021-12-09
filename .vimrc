@@ -25,8 +25,8 @@ Plugin 'github/copilot.vim'
 call vundle#end()
 filetype plugin indent on
 
-" Map ctrl + o to open file explorer
-map <C-o> :NERDTreeToggle<CR>
+" add sub directories to path for find
+set path+=**
 
 colorscheme zenburn
 set tags=./tags,tags;$HOME
