@@ -51,17 +51,12 @@ function ta() {
 }
 
 function z() {
-  # create new zet file
-  d=$(date +'%Y%m%d%H%M%S')
+  d=$(date +'%Y%m%d')
   base_dir=$HOME/zet/$d
   mkdir $base_dir
-  vim $base_dir/README.md
-  # delete directory if no file exists
-  if [ ! -f "$base_dir/README.md" ]; then
+  nvim $base_dir/README.adoc
+  if [ ! -f "$base_dir/README.adoc" ]; then
     rm -r $base_dir
-  else
-    git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet add $d
-    git --git-dir=$HOME/zet/.git --work-tree=$HOME/zet commit
   fi
 }
 
