@@ -53,12 +53,23 @@ function ta() {
 function z() {
   d=$(date +'%Y%m%d')
   base_dir=$HOME/zet/$d
-  mkdir $base_dir
-  nvim $base_dir/README.adoc
-  if [ ! -f "$base_dir/README.adoc" ]; then
-    rm -r $base_dir
-  fi
+  dinit $base_dir/README.adoc
 }
+
+function dinit() {
+  if [ ! -f "$1" ]; then
+    mkdir $base_dir
+    echo ":toc: macro
+:toc-title:
+:toclevels: 9
+
+# 
+
+toc::[]" > "$1"
+  fi
+  nvim $1
+}
+
 
 function rh() {
   # reset hard to branch $1
