@@ -30,5 +30,6 @@ function _makefile_complete {
 complete -F _makefile_complete make
 
 source <(kubectl completion bash)
+source <(npm completion)
 complete -F __start_kubectl k
 

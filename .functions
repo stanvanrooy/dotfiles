@@ -70,6 +70,14 @@ toc::[]" > "$1"
   nvim $1
 }
 
+scratch() {
+  # Get random 8 character string
+  rnd=$(head /dev/urandom | LC_ALL=C tr -dc 'a-z' | fold -w 8 | head -n 1)
+  # Create a directory
+  mkdir -p /tmp/$rnd
+  cd /tmp/$rnd
+  nvim "scratch.$1"
+}
 
 function rh() {
   # reset hard to branch $1
