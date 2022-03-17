@@ -6,6 +6,7 @@ source $HOME/dotfiles/.bash_prompt
 source $HOME/dotfiles/.aliases
 source $HOME/dotfiles/.functions
 source $HOME/dotfiles/.completions
+source $HOME/.exports_private
 
 shopt -s nocaseglob;
 shopt -s histappend;

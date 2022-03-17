@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+complete -F __start_kubectl k
+
+source <(npm completion)
+source <(jira completion bash)
 
 function _dotnet_bash_complete() {
   local word=${COMP_WORDS[COMP_CWORD]}
@@ -29,7 +33,4 @@ function _makefile_complete {
 }
 complete -F _makefile_complete make
 
-source <(kubectl completion bash)
-source <(npm completion)
-complete -F __start_kubectl k
 
