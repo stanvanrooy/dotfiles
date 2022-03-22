@@ -1,0 +1,12 @@
+#!/bin/bash
+
+case $1 
+in
+  "dotnet-format")
+    dotnet-format --files $(git show --name-only --pretty="" | tr '\n' ',')
+    ;;
+  *)
+    echo "Usage: $0 {dotnet-format}"
+    exit 1
+    ;;
+esac
