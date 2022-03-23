@@ -15,6 +15,7 @@ alias docs="cd ~/Documents"
 alias p="cd ~/projects"
 alias fun="cd ~/projects/fun"
 alias os="cd ~/projects/opensource"
+alias dot="cd ~/dotfiles"
 alias bashrc="vim ~/dotfiles/.bashrc"
 alias clr=clear
 

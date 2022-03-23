@@ -3,7 +3,6 @@ filetype off
 syntax on
 
 set rtp+=~/.vim/bundle/Vundle.vim
-set rtp^=~/projects/coc-pyre/
 call vundle#begin()
 
 Plugin 'OmniSharp/omnisharp-vim'
@@ -28,7 +27,11 @@ filetype plugin indent on
 " add sub directories to path for find
 set path+=**
 
-colorscheme zenburn
+" Show file options above command line
+set wildmenu
+set wildignore+=*.swp,*.swo,bin/*,obj/*
+
+colorscheme 1989
 set tags=./tags,tags;$HOME
 
 " Use the OS's clipboard
@@ -40,6 +43,7 @@ set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+let mapleader=" "
 " Enable relative line numbers
 set relativenumber
 " Centralize backups, swp files and undo history
