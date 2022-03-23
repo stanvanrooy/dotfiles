@@ -31,7 +31,10 @@ set path+=**
 set wildmenu
 set wildignore+=*.swp,*.swo,bin/*,obj/*
 
-colorscheme 1989
+" Automatically change directory to the directory of whichever file is opened
+set autochdir
+
+colorscheme zenburn
 set tags=./tags,tags;$HOME
 
 " Use the OS's clipboard
