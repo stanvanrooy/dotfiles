@@ -29,10 +29,12 @@ function fs() {
 }
 
 function fr() {
-  # argument 1 contains the directory to search in 
-  # argument 2 is the regex string to replace
-  # argument 3 is the replacement string
-  find "$1" -type f -regex "$2" -exec sed -i '' -e "$3" {} +
+  command -v gsed > /dev/null
+  if [[ $? -eq 0 ]]; then 
+    find "$1" -type f -exec gsed -i "s/$2/$3/g" {} +
+  else
+    find "$1" -type f -exec sed -i "s/$2/$3/g" {} +
+  fi
 }
 
 function diff() {
@@ -71,16 +73,13 @@ toc::[]" > "$1"
 }
 
 scratch() {
-  # Get random 8 character string
   rnd=$(head /dev/urandom | LC_ALL=C tr -dc 'a-z' | fold -w 8 | head -n 1)
-  # Create a directory
   mkdir -p /tmp/$rnd
   cd /tmp/$rnd
   nvim "scratch.$1"
 }
 
 function rh() {
-  # reset hard to branch $1
   git checkout $1
   git reset --hard origin/$1
 }

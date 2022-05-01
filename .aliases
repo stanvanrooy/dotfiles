@@ -17,7 +17,7 @@ alias fun="cd ~/projects/fun"
 alias os="cd ~/projects/opensource"
 alias dot="cd ~/dotfiles"
 alias bashrc="vim ~/dotfiles/.bashrc"
-alias clr=clear
+alias clr="clear"
 
 # Zet
 alias zc="cd $HOME/zet"
@@ -62,9 +62,7 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 done
 
 alias path="echo -e ${PATH//:/\\n}"
-alias qemu='qemu-system-x86_64'
-
-alias neofetch='fastfetch'
+alias jql="jira issue list -q \"$1\""
 
 eqdir=/Users/stanvanrooy/elfsquad/devstack
 if [ -d $eqdir ]; then
