@@ -79,8 +79,15 @@ scratch() {
   nvim "scratch.$1"
 }
 
-function rh() {
-  git checkout $1
-  git reset --hard origin/$1
+checkout() {
+  git fetch
+  git checkout $1 origin/$1
+}
+
+main() {
+  git checkout origin/main
+  git pull origin main
+  git branch -D main
+  git checkout -b main
 }
 

@@ -33,4 +33,4 @@ function _makefile_complete {
 }
 complete -F _makefile_complete make
 
-
+complete -F __start_eim eim
