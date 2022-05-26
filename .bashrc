@@ -1,12 +1,12 @@
 export PATH="$HOME/bin:$PATH"
 
-source $HOME/dotfiles/.path
-source $HOME/dotfiles/.exports
-source $HOME/dotfiles/.bash_prompt
-source $HOME/dotfiles/.aliases
-source $HOME/dotfiles/.functions
-source $HOME/dotfiles/.completions
 source $HOME/.exports_private
+source $HOME/dotfiles/aliases
+source $HOME/dotfiles/bash_prompt
+source $HOME/dotfiles/completions
+source $HOME/dotfiles/exports
+source $HOME/dotfiles/functions
+source $HOME/dotfiles/path
 
 shopt -s nocaseglob;
 shopt -s histappend;
