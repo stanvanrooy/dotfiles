@@ -10,14 +10,14 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 " temporarily highlights the line vim moves to after a search
 Plugin 'inside/vim-search-pulse'
-" beautifull bottom bar in the editor
-Plugin 'vim-airline/vim-airline'
 " highlight all other occurences of a search term
 Plugin 'RRethy/vim-illuminate'
 " syntax highlighting
 Plugin 'neoclide/coc.nvim'
 " easy navigation between vim and tmux
 Plugin 'christoomey/vim-tmux-navigator'
+" show tabs for all buffers
+Plugin 'ap/vim-buftabline'
 Plugin 'github/copilot.vim'
 
 call vundle#end()
@@ -108,4 +108,8 @@ autocmd BufRead,BufNewFile *.md,*.adoc,*.txt,*.git-commit :set spell spelllang=e
 " execute macro q by pressing space
 :nnoremap <Space> @q
 
+" buffer tabs
+set hidden
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
 
