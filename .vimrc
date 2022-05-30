@@ -18,6 +18,8 @@ Plugin 'neoclide/coc.nvim'
 Plugin 'christoomey/vim-tmux-navigator'
 " show tabs for all buffers
 Plugin 'ap/vim-buftabline'
+" fuzzy finder 
+Plugin 'kien/ctrlp.vim'
 Plugin 'github/copilot.vim'
 
 call vundle#end()
@@ -112,4 +114,7 @@ autocmd BufRead,BufNewFile *.md,*.adoc,*.txt,*.git-commit :set spell spelllang=e
 set hidden
 nnoremap <C-N> :bnext<CR>
 nnoremap <C-P> :bprev<CR>
+
+" fuzzy finder
+let g:ctrlp_map = '<c-f>'
 
