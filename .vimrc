@@ -12,14 +12,16 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'inside/vim-search-pulse'
 " highlight all other occurences of a search term
 Plugin 'RRethy/vim-illuminate'
-" syntax highlighting
-Plugin 'neoclide/coc.nvim'
 " easy navigation between vim and tmux
 Plugin 'christoomey/vim-tmux-navigator'
 " show tabs for all buffers
 Plugin 'ap/vim-buftabline'
 " fuzzy finder 
 Plugin 'kien/ctrlp.vim'
+" LSP
+Plugin 'neovim/nvim-lspconfig'
+" Syntax highlighting
+Plugin 'jlcrochet/vim-cs'
 Plugin 'github/copilot.vim'
 
 call vundle#end()
@@ -35,7 +37,7 @@ set wildignore+=*.swp,*.swo,bin/*,obj/*
 " Automatically change directory to the directory of whichever file is opened
 set autochdir
 
-colorscheme zenburn
+colorscheme gruvbox
 set tags=./tags,tags;$HOME
 
 " Use the OS's clipboard
@@ -58,50 +60,14 @@ set undofile
 
 set textwidth=72
 
-" coc.nvim setup
-let g:coc_global_extensions = ['coc-tslint', 'coc-html', 'coc-angular', 'coc-cmake', 'coc-html-css-support', 'coc-sh', 'coc-tsserver', 'coc-python'] 
-
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
 
-" use tab for completion
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+" Use backspace to go to previous line
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" use ctrl + space to trigger completion
-inoremap <silent><expr> <c-@> coc#refresh()
-
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" map filetypes
-autocmd BufEnter *.svelte :setlocal filetype=svelte
-
-" go to shortcuts
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" map K to show docs
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
 endfunction
 
 " spell check for markdown, asciidoc & git commit messages

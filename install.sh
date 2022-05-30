@@ -50,12 +50,6 @@ if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
   vim +PluginInstall +qall
 fi
 
-# Build coc.nvim
-cd $HOME/.vim/bundle/coc.nvim/
-sudo npm i -g yarn
-yarn install
-yarn build
-
 # Install tmux plugins
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
