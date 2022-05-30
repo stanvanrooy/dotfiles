@@ -18,10 +18,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ap/vim-buftabline'
 " fuzzy finder 
 Plugin 'kien/ctrlp.vim'
-" LSP
-Plugin 'neovim/nvim-lspconfig'
 " Syntax highlighting
-Plugin 'jlcrochet/vim-cs'
 Plugin 'github/copilot.vim'
 
 call vundle#end()

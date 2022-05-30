@@ -2,6 +2,9 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
 
+Plugin 'neovim/nvim-lspconfig'
+Plugin 'ms-jpq/coq_nvim'
+
 :lua << EOF
   local opts = { noremap=true, silent=true }
   vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
@@ -32,16 +35,20 @@ source ~/.vimrc
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   end
 
-  -- Use a loop to conveniently call 'setup' on multiple servers and
-  -- map buffer local keybindings when the language server attaches
   local servers = { 'tsserver', 'csharp_ls' }
-  for _, lsp in pairs(servers) do
-    require('lspconfig')[lsp].setup {
+  
+  local coq = require "coq"
+  local lsp = require "lspconfig"
+
+  for _, server in pairs(servers) do
+    local capabilities = coq.lsp_ensure_capabilities({
       on_attach = on_attach,
       flags = {
         debounce_text_changes = 150,
-      }
-    }
+      },
+      capabilities = capabilities,
+    })
+    lsp[server].setup(capabilities)
   end
 EOF
 
