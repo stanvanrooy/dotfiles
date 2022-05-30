@@ -23,6 +23,7 @@ alias zc="cd $HOME/zet"
 # Git
 alias g="git"
 alias gap="git add -p"
+alias gr="git rebase -i HEAD~2"
 
 # Kubectl
 alias k="kubectl"
