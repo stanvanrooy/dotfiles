@@ -84,6 +84,14 @@ checkout() {
   git checkout $1 origin/$1
 }
 
+dt() {
+  dotnet test --filter=FullyQualifiedName~$1
+}
+
+dtw() {
+  dotnet watch test --filter=FullyQualifiedName~$1
+}
+
 main() {
   git checkout origin/main
   git pull origin main
