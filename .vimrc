@@ -41,14 +41,20 @@ set tags=./tags,tags;$HOME
 set clipboard=unnamed
 " Optimize for fast terminal connections
 set ttyfast
-" Set indentation to 2 spaces
+
+" Set default indentation to 2 spaces
 set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 let mapleader=" "
+
+" Set indentation to 4 spaces for .cs files
+autocmd FileType cs setlocal shiftwidth=4 softtabstop=4 expandtab
+
 " Enable relative line numbers
 set relativenumber
+
 " Centralize backups, swp files and undo history
 set backupdir=~/dotfiles/.vim/backups
 set directory=~/dotfiles/.vim/swaps
