@@ -16,6 +16,7 @@ alias p="cd ~/projects"
 alias fun="cd ~/projects/fun"
 alias os="cd ~/projects/opensource"
 alias dot="cd ~/dotfiles"
+alias todo="vim ~/org/todo.org"
 
 # Zet
 alias zc="cd $HOME/zet"
