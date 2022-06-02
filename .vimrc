@@ -32,11 +32,6 @@ Plugin 'tpope/vim-speeddating'
 
 call vundle#end()
 
-augroup dateformats
-	autocmd!
-	autocmd VimEnter * silent execute 'SpeedDatingFormat %d-%m-%Y'
-augroup END
-
 filetype plugin indent on
 
 " add sub directories to path for find
@@ -62,7 +57,8 @@ set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-let mapleader=" "
+let mapleader="//"
+let maplocalleader=","
 
 " Set indentation to 4 spaces for .cs files
 autocmd FileType cs setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -105,3 +101,11 @@ let g:ctrlp_map = '<c-f>'
 " org mode
 packloadall
 silent! helptags ALL
+
+augroup dateformats
+	autocmd!
+	autocmd VimEnter * silent execute 'SpeedDatingFormat %d-%m-%Y'
+augroup END
+
+let g:org_agenda_files=['~/org/todo.org']
+
