@@ -6,22 +6,37 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-" beautifull colorschemes
+" Beautifull colorschemes
 Plugin 'flazz/vim-colorschemes'
-" temporarily highlights the line vim moves to after a search
+
+" Hemporarily highlights the line vim moves to after a search
 Plugin 'inside/vim-search-pulse'
-" highlight all other occurences of a search term
+
+" Highlight all other occurences of a search term
 Plugin 'RRethy/vim-illuminate'
-" easy navigation between vim and tmux
+
+" Easy navigation between vim and tmux
 Plugin 'christoomey/vim-tmux-navigator'
-" show tabs for all buffers
+
+" Show tabs for all buffers
 Plugin 'ap/vim-buftabline'
+
 " fuzzy finder 
 Plugin 'kien/ctrlp.vim'
-" Syntax highlighting
+
 Plugin 'github/copilot.vim'
 
+" Org mode
+Plugin 'jceb/vim-orgmode'
+Plugin 'tpope/vim-speeddating'
+
 call vundle#end()
+
+augroup dateformats
+	autocmd!
+	autocmd VimEnter * silent execute 'SpeedDatingFormat %d-%m-%Y'
+augroup END
+
 filetype plugin indent on
 
 " add sub directories to path for find
@@ -87,3 +102,6 @@ nnoremap <C-P> :bprev<CR>
 " fuzzy finder
 let g:ctrlp_map = '<c-f>'
 
+" org mode
+packloadall
+silent! helptags ALL
