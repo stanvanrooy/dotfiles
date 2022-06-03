@@ -85,7 +85,7 @@ function! s:check_back_space() abort
 endfunction
 
 " spell check for markdown, asciidoc & git commit messages
-autocmd BufRead,BufNewFile *.md,*.adoc,*.txt,*.git-commit :set spell spelllang=en_us
+autocmd BufRead,BufNewFile *.md,*.adoc,*.txt,*.git-commit,*.org :set spell spelllang=en_us
 
 " execute macro q by pressing space
 :nnoremap <Space> @q
