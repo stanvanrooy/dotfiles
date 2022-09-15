@@ -39,10 +39,13 @@ Plugin 'ms-jpq/coq.thirdparty'
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   end
 
-  local servers = { 'tsserver', 'csharp_ls' }
+  -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+  local servers = { 'tsserver', 'csharp_ls', 'jedi_language_server', 'hls', 'gopls' }
   
   local coq = require "coq"
   local lsp = require "lspconfig"
+
+  lsp.hls.setup{}
 
   for _, server in pairs(servers) do
     local capabilities = coq.lsp_ensure_capabilities({

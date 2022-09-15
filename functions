@@ -92,6 +92,10 @@ dtw() {
   dotnet watch test --filter=FullyQualifiedName~$1
 }
 
+nettest() {
+  dotnet test -l "console;verbosity=detailed" --filter="FullyQualifiedName~$1"
+}
+
 main() {
   git checkout origin/main
   git pull origin main

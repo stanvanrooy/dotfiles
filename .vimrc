@@ -34,15 +34,21 @@ call vundle#end()
 
 filetype plugin indent on
 
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+
 " add sub directories to path for find
 set path+=**
 
 " Show file options above command line
 set wildmenu
 set wildignore+=*.swp,*.swo,bin/*,obj/*
-
-" Automatically change directory to the directory of whichever file is opened
-set autochdir
 
 colorscheme gruvbox
 set tags=./tags,tags;$HOME
@@ -61,7 +67,10 @@ let mapleader="//"
 let maplocalleader=","
 
 " Set indentation to 4 spaces for .cs files
-autocmd FileType cs setlocal shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType cs setlocal shiftwidth=4 softtabstop=4 tabstop=4 expandtab
+
+" Set indentation to 2 spaces for .py files
+autocmd FileType py setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
 
 " Enable relative line numbers
 set relativenumber
