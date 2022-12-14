@@ -28,7 +28,7 @@ prompt_git() {
 		echo '(unknown)')";
 
 	repoUrl="$(git config --get remote.origin.url)";
-	if grep -q '/Elfskot/Elfskot' <<< "${repoUrl}"; then
+	if grep -q ':Elfsquad/cpq.git' <<< "${repoUrl}"; then
 		s+='*';
 	else
 		# Check for uncommitted changes in the index.

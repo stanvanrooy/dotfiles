@@ -23,8 +23,8 @@ alias zc="cd $HOME/zet"
 
 # Git
 alias g="git"
-alias gap="git add -p"
 alias gr="git rebase -i HEAD~2"
+alias grm="git branch --merged | egrep -v \"(^\*|main)\" | xargs git branch -d"
 
 # Kubectl
 alias k="kubectl"
@@ -68,4 +68,8 @@ fi
 alias jql="jira issue list -q \"$1\""
 alias bashrc="nvim ~/dotfiles/.bashrc"
 alias c="clear"
+
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+  alias "${method}"="lwp-request -m '${method}'"
+done
 
