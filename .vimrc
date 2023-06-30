@@ -28,6 +28,7 @@ Plugin 'github/copilot.vim'
 
 " Org mode
 Plugin 'jceb/vim-orgmode'
+Plugin 'vim-scripts/utl.vim'
 Plugin 'tpope/vim-speeddating'
 
 call vundle#end()
@@ -51,7 +52,6 @@ set wildmenu
 set wildignore+=*.swp,*.swo,bin/*,obj/*
 
 colorscheme gruvbox
-set tags=./tags,tags;$HOME
 
 " Use the OS's clipboard
 set clipboard=unnamed
@@ -118,3 +118,5 @@ augroup END
 
 let g:org_agenda_files=['~/org/todo.org']
 
+" UTL
+let g:utl_cfg_hdl_scm_http_system = ":call system('open %u')"

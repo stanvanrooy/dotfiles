@@ -21,3 +21,4 @@ export CLIP_DIR="$HOME/Videos/Clips"
 export CLIP_DATA="$HOME/.config/clip/data"
 export LSCOLORS="gxBxhxDxfxhxhxhxhxcxcx"
 
+export ANDROID_HOME="$HOME/Library/Android/sdk"
