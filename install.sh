@@ -1,4 +1,5 @@
-# Create symlinks if they do not exists
+isMac=$(uname -s | grep -q "Darwin" && echo "true" || echo "false")
+
 if [ ! -f "$HOME/.bashrc" ]; then
   ln -s $HOME/dotfiles/.bashrc $HOME/.bashrc
 fi;
@@ -28,21 +29,41 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
   ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 fi
 
-if [ ! -d "$HOME/zet" ]; then
-  git clone git@github.com:stanvanrooy/zet.git $HOME/zet
-fi
-
 # Install dependencies
-brew install git
-brew install vim
-brew install tmux
-brew install kubernetes-cli
-brew install azure-cli
-brew install node@16
-brew install bash-completion@2
-brew install nvim
-brew install docker
-brew install docker-compose
+if [ "$isMac" == "true" ]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew install git
+  brew install vim
+  brew install tmux
+  brew install kubernetes-cli
+  brew install azure-cli
+  brew install node@16
+  brew install bash-completion@2
+  brew install nvim
+  brew install docker
+  brew install docker-compose
+else
+  sudo apt install -y curl
+  # Setup kubectl repo
+  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+  # Setup nodejs repo
+  curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash
+
+  # Setup docker repo
+  sudo install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  sudo chmod a+r /etc/apt/keyrings/docker.gpg
+  echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+  sudo apt update
+  sudo apt install -y vim neovim tmux kubectl bash-completion nodejs docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+fi
 
 # Install vim plugins
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
@@ -59,14 +80,14 @@ fi
 # Install completions
 sudo curl \
   -L https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/bash/docker-compose \
-  -o /opt/homebrew/etc/bash_completion.d/docker-compose
-curl \
+  -o /etc/bash_completion.d/docker-compose
+sudo curl \
   -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker \
-  -o /opt/homebrew/etc/bash_completion.d/docker
-curl \
+  -o /etc/bash_completion.d/docker
+sudo curl \
   -L https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion \
-  -o /opt/homebrew/etc/bash_completion.d/az
-kubectl completion bash > /opt/homebrew/etc/bash_completion.d/kubectl
+  -o /etc/bash_completion.d/az
+sudo bash -c 'kubectl completion bash > /etc/bash_completion.d/kubectl'
 
 source $HOME/dotfiles/.bashrc
 

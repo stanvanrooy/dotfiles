@@ -65,7 +65,6 @@ if [ -d $eqdir ]; then
 fi
 
 # Miscenallenous
-alias jql="jira issue list -q \"$1\""
 alias bashrc="nvim ~/dotfiles/.bashrc"
 alias c="clear"
 

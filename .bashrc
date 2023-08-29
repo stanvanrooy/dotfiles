@@ -12,10 +12,11 @@ shopt -s nocaseglob;
 shopt -s histappend;
 shopt -s cdspell;
 
-source $(brew --prefix)/etc/bash_completion
+if [ -x brew ]; then
+  source $(brew --prefix)/etc/bash_completion
+fi
 
 git config --global core.excludesFile '$HOME/dotfiles/.gitignore.global'
-__git_complete g __git_main
 
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
     tmux attach -t default || tmux new -s default

@@ -2,7 +2,6 @@
 complete -F __start_kubectl k
 
 source <(npm completion)
-source <(jira completion bash)
 
 function _dotnet_bash_complete() {
   local word=${COMP_WORDS[COMP_CWORD]}
@@ -32,5 +31,8 @@ function _makefile_complete {
     COMPREPLY=( $(compgen -W "${targets[@]}" -- $curr_arg ) );
 }
 complete -F _makefile_complete make
-
 complete -F __start_eim eim
+
+source /usr/share/bash-completion/completions/git
+__git_complete g __git_main
+
