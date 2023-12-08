@@ -2,9 +2,6 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
 
-Plugin 'neovim/nvim-lspconfig'
-Plugin 'ms-jpq/coq_nvim'
-Plugin 'ms-jpq/coq.thirdparty'
 
 :lua << EOF
   require('coq_3p') {
@@ -57,5 +54,12 @@ Plugin 'ms-jpq/coq.thirdparty'
     })
     lsp[server].setup(capabilities)
   end
+
+  require("mason").setup()
+
+  require("mason-lspconfig").setup {
+    ensure_installed = servers
+  }
+
 EOF
 

@@ -61,7 +61,7 @@ else
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
   sudo apt update
-  sudo apt install -y vim neovim tmux kubectl bash-completion nodejs docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  sudo apt install -y vim neovim tmux kubectl bash-completion nodejs docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin python3 dotnet-sdk-7.0
   curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 fi
 

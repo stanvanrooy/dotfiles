@@ -59,7 +59,7 @@ alias sudo='sudo '
 alias urlencode='python3 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # Elfsquad
-eqdir=/Users/stanvanrooy/elfsquad/devstack
+eqdir=/home/stan/elfsquad/devstack
 if [ -d $eqdir ]; then
   source $eqdir/.aliases $eqdir/..
 fi

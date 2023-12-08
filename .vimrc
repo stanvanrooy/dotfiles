@@ -31,6 +31,14 @@ Plugin 'jceb/vim-orgmode'
 Plugin 'vim-scripts/utl.vim'
 Plugin 'tpope/vim-speeddating'
 
+" lsp
+Plugin 'neovim/nvim-lspconfig'
+Plugin 'williamboman/mason.nvim'
+Plugin 'williamboman/mason-lspconfig.nvim'
+Plugin 'ms-jpq/coq_nvim'
+Plugin 'ms-jpq/coq.thirdparty'
+
+
 call vundle#end()
 
 filetype plugin indent on
@@ -54,7 +62,7 @@ set wildignore+=*.swp,*.swo,bin/*,obj/*
 colorscheme gruvbox
 
 " Use the OS's clipboard
-set clipboard=unnamed
+set clipboard+=unnamedplus
 " Optimize for fast terminal connections
 set ttyfast
 
