@@ -1,6 +1,7 @@
 [user]
 	email = me@stanvanrooy.com
 	name = Stan van Rooy
+	signingkey = 67BDC566B8CF8C47
 [core]
 	editor = vim
 	excludesFile = $HOME/dotfiles/.gitignore.global

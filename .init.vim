@@ -37,7 +37,7 @@ source ~/.vimrc
   end
 
   -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-  local servers = { 'tsserver', 'csharp_ls', 'jedi_language_server', 'hls', 'gopls' }
+  local servers = { 'tsserver', 'csharp_ls', 'jedi_language_server', 'gopls', 'clangd' }
   
   local coq = require "coq"
   local lsp = require "lspconfig"
@@ -58,8 +58,18 @@ source ~/.vimrc
   require("mason").setup()
 
   require("mason-lspconfig").setup {
-    ensure_installed = servers
+    ensure_installed = servers,
+    automatic_installation = true,
   }
+
+  require('lspconfig').clangd.setup{
+    on_new_config = function(new_config, new_cwd)
+        local status, cmake = pcall(require, "cmake-tools")
+        if status then
+            cmake.clangd_on_new_config(new_config)
+        end
+    end,
+}
 
 EOF
 

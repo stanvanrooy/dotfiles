@@ -38,6 +38,8 @@ Plugin 'williamboman/mason-lspconfig.nvim'
 Plugin 'ms-jpq/coq_nvim'
 Plugin 'ms-jpq/coq.thirdparty'
 
+Plugin 'nvim-lua/plenary.nvim'
+Plugin 'Civitasv/cmake-tools.nvim'
 
 call vundle#end()
 
