@@ -72,5 +72,7 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "${method}"="lwp-request -m '${method}'"
 done
 
+alias elfsquad="node /home/stan/elfsquad/elfsquad-cli/dist/index.js"
+
 eval "$(github-copilot-cli alias -- "$0")"
 
