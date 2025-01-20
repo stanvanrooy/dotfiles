@@ -73,7 +73,7 @@ set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-let mapleader="//"
+let mapleader="\\"
 let maplocalleader=","
 
 " Set indentation to 4 spaces for .cs files
@@ -81,6 +81,9 @@ autocmd FileType cs setlocal shiftwidth=4 softtabstop=4 tabstop=4 expandtab
 
 " Set indentation to 2 spaces for .py files
 autocmd FileType py setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+
+" Set filetype to JSX for .mdx files
+autocmd BufRead,BufNewFile *.mdx set filetype=javascript.jsx
 
 " Enable relative line numbers
 set relativenumber
