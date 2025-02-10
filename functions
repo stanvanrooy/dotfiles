@@ -1,109 +1,258 @@
 #!/usr/bin/env bash
+
+# -----------------------------------------------------------------------------
+# Kill Process on Port
+# -----------------------------------------------------------------------------
 function kp() {
-  # kill process that is running on port $1
-  sudo kill -9 $(sudo lsof -t -i:$1);
-}
-
-function gp() {
-  # get process that is running on port $1
-  sudo lsof -t -i:$1
-}
-
-function mkd() {
-  # make directory $1 and enter it
-  mkdir -p "$@" && cd "$_";
-}
-
-function fs() {
-  # get file of current directory and descendants with size
-  if du -b /dev/null > /dev/null 2>&1; then
-    local arg=-sbh;
+  # Kill process running on port $1.
+  if [ -z "$1" ]; then
+    echo "Usage: kp <port>"
+    return 1
+  fi
+  local pid
+  pid=$(sudo lsof -t -i:"$1")
+  if [ -n "$pid" ]; then
+    sudo kill -9 "$pid"
   else
-    local arg=-sh;
-  fi;
-  if [[ -n "$@" ]]; then
-    du $arg -- "$@";
-  else
-    du $arg .[^.]* ./*;
-  fi;
-}
-
-function fr() {
-  command -v gsed > /dev/null
-  if [[ $? -eq 0 ]]; then 
-    find "$1" -type f -exec gsed -i "s/$2/$3/g" {} +
-  else
-    find "$1" -type f -exec sed -i "s/$2/$3/g" {} +
+    echo "No process found running on port $1"
   fi
 }
 
+# -----------------------------------------------------------------------------
+# Get Process on Port
+# -----------------------------------------------------------------------------
+function gp() {
+  # Display process running on port $1.
+  if [ -z "$1" ]; then
+    echo "Usage: gp <port>"
+    return 1
+  fi
+  sudo lsof -t -i:"$1"
+}
+
+# -----------------------------------------------------------------------------
+# Make Directory and Enter It
+# -----------------------------------------------------------------------------
+function mkd() {
+  # Create directory $1 (with parents if necessary) and cd into it.
+  if [ -z "$1" ]; then
+    echo "Usage: mkd <directory>"
+    return 1
+  fi
+  local dir="$1"
+  mkdir -p "$dir" && cd "$dir"
+}
+
+# -----------------------------------------------------------------------------
+# File Size Summary (du)
+# -----------------------------------------------------------------------------
+function fs() {
+  # Show sizes for files in the given directories or current dir if none provided.
+  local arg
+  if du -b /dev/null > /dev/null 2>&1; then
+    arg="-sbh"
+  else
+    arg="-sh"
+  fi
+
+  if [ "$#" -gt 0 ]; then
+    du $arg -- "$@"
+  else
+    du $arg .[^.]* ./*
+  fi
+}
+
+# -----------------------------------------------------------------------------
+# Find & Replace in Files
+# -----------------------------------------------------------------------------
+function fr() {
+  # Recursively search files in a given path and replace $2 with $3.
+  # Usage: fr <path> <search> <replace>
+  if [ "$#" -lt 3 ]; then
+    echo "Usage: fr <path> <search> <replace>"
+    return 1
+  fi
+  local path="$1" search="$2" replace="$3"
+  if command -v gsed &>/dev/null; then 
+    find "$path" -type f -exec gsed -i "s/${search}/${replace}/g" {} +
+  else
+    if [[ "$(uname)" == "Darwin" ]]; then
+      # macOS sed needs an empty string for in‑place edits.
+      find "$path" -type f -exec sed -i '' "s/${search}/${replace}/g" {} +
+    else
+      find "$path" -type f -exec sed -i "s/${search}/${replace}/g" {} +
+    fi
+  fi
+}
+
+# -----------------------------------------------------------------------------
+# Git Diff with Color & Word Highlights
+# -----------------------------------------------------------------------------
 function diff() {
-  git diff --no-index --color-word "$@";
+  # Use git diff with --no-index and colorized word differences.
+  # Note: This overrides the built-in diff command.
+  git diff --no-index --color-word "$@"
 }
 
+# -----------------------------------------------------------------------------
+# Execute Command in All Tmux Panes
+# -----------------------------------------------------------------------------
 function ta() {
-  # excecute command in all tmux panes
-  for _pane in $(tmux list-panes -F '#P'); do
-    for var in "$@"; do
-      tmux send-keys -t ${_pane} $var;
-      tmux send-keys -t ${_pane} Space;
-    done;
-    tmux send-key -t ${_pane} Enter;
-  done;
+  # Send the specified command (arguments) to every tmux pane.
+  if ! command -v tmux &>/dev/null; then
+    echo "tmux is not installed."
+    return 1
+  fi
+  local pane
+  for pane in $(tmux list-panes -F '#P'); do
+    for arg in "$@"; do
+      tmux send-keys -t "$pane" "$arg" Space
+    done
+    tmux send-key -t "$pane" Enter
+  done
 }
 
+# -----------------------------------------------------------------------------
+# Zettelkasten Entry Shortcut
+# -----------------------------------------------------------------------------
 function z() {
+  # Create a new zettelkasten entry file in $HOME/zet/<YYYYMMDD>/README.adoc.
+  local d base_dir
   d=$(date +'%Y%m%d')
-  base_dir=$HOME/zet/$d
-  dinit $base_dir/README.adoc
+  base_dir="$HOME/zet/$d"
+  dinit "$base_dir/README.adoc"
 }
 
+# -----------------------------------------------------------------------------
+# Document Initialization
+# -----------------------------------------------------------------------------
 function dinit() {
-  if [ ! -f "$1" ]; then
-    mkdir $base_dir
-    echo ":toc: macro
+  # Initialize a document if it doesn't exist.
+  # Usage: dinit <filepath>
+  if [ -z "$1" ]; then
+    echo "Usage: dinit <filepath>"
+    return 1
+  fi
+  local file dir
+  file="$1"
+  dir=$(dirname "$file")
+  if [ ! -f "$file" ]; then
+    mkdir -p "$dir"
+    cat <<'EOF' > "$file"
+:toc: macro
 :toc-title:
 :toclevels: 9
 
 # 
 
-toc::[]" > "$1"
+toc::[]
+EOF
   fi
-  nvim $1
+  nvim "$file"
 }
 
-scratch() {
+# -----------------------------------------------------------------------------
+# Scratch File Creator
+# -----------------------------------------------------------------------------
+function scratch() {
+  # Create and open a scratch file with the given extension in a random /tmp folder.
+  # Usage: scratch <extension>
+  if [ -z "$1" ]; then
+    echo "Usage: scratch <extension>"
+    return 1
+  fi
+  local rnd dir
   rnd=$(head /dev/urandom | LC_ALL=C tr -dc 'a-z' | fold -w 8 | head -n 1)
-  mkdir -p /tmp/$rnd
-  cd /tmp/$rnd
+  dir="/tmp/$rnd"
+  mkdir -p "$dir"
+  cd "$dir" || return 1
   nvim "scratch.$1"
 }
 
-checkout() {
+# -----------------------------------------------------------------------------
+# Git Branch Checkout from Origin
+# -----------------------------------------------------------------------------
+function checkout() {
+  # Fetch and checkout the specified branch from origin.
+  # Usage: checkout <branch>
+  if [ -z "$1" ]; then
+    echo "Usage: checkout <branch>"
+    return 1
+  fi
   git fetch
-  git checkout $1 origin/$1
+  git checkout "$1" "origin/$1"
 }
 
-dt() {
-  dotnet test --filter=FullyQualifiedName~$1
+# -----------------------------------------------------------------------------
+# Dotnet Test Filter
+# -----------------------------------------------------------------------------
+function dt() {
+  # Run dotnet test filtered by FullyQualifiedName.
+  # Usage: dt <filter>
+  if [ -z "$1" ]; then
+    echo "Usage: dt <test_filter>"
+    return 1
+  fi
+  dotnet test --filter="FullyQualifiedName~$1"
 }
 
-dtw() {
-  dotnet watch test --filter=FullyQualifiedName~$1
+# -----------------------------------------------------------------------------
+# Dotnet Watch Test Filter
+# -----------------------------------------------------------------------------
+function dtw() {
+  # Run dotnet watch test filtered by FullyQualifiedName.
+  # Usage: dtw <test_filter>
+  if [ -z "$1" ]; then
+    echo "Usage: dtw <test_filter>"
+    return 1
+  fi
+  dotnet watch test --filter="FullyQualifiedName~$1"
 }
 
-nettest() {
+# -----------------------------------------------------------------------------
+# Dotnet Test with Detailed Console Logging
+# -----------------------------------------------------------------------------
+function nettest() {
+  # Run dotnet test with detailed console logging.
+  # Usage: nettest <test_filter>
+  if [ -z "$1" ]; then
+    echo "Usage: nettest <test_filter>"
+    return 1
+  fi
   dotnet test -l "console;verbosity=detailed" --filter="FullyQualifiedName~$1"
 }
 
-bright() {
-  xrandr --output $(xrandr --current | grep " connected" | awk '{print $1}') --brightness $1
+# -----------------------------------------------------------------------------
+# Adjust Screen Brightness via xrandr
+# -----------------------------------------------------------------------------
+function bright() {
+  # Adjust the brightness for the primary display.
+  # Usage: bright <brightness_value>
+  if [ -z "$1" ]; then
+    echo "Usage: bright <brightness_value>"
+    return 1
+  fi
+  if ! command -v xrandr &>/dev/null; then
+    echo "xrandr not found."
+    return 1
+  fi
+  local output
+  output=$(xrandr --current | grep " connected" | awk '{print $1}')
+  xrandr --output "$output" --brightness "$1"
 }
 
-main() {
-  git checkout origin/main
-  git pull origin main
-  git branch -D main
+# -----------------------------------------------------------------------------
+# Main Branch Rebuild Shortcut
+# -----------------------------------------------------------------------------
+function main() {
+  # Rebuild the local main branch from origin/main.
+  if ! command -v git &>/dev/null; then
+    echo "git is not installed."
+    return 1
+  fi
+  git checkout origin/main &&
+  git pull origin main &&
+  git branch -D main &&
   git checkout -b main
 }
 

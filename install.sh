@@ -1,93 +1,78 @@
-isMac=$(uname -s | grep -q "Darwin" && echo "true" || echo "false")
+#!/usr/bin/env bash
+set -euo pipefail
 
-if [ ! -f "$HOME/.bashrc" ]; then
-  ln -s $HOME/dotfiles/.bashrc $HOME/.bashrc
-fi;
-
-if [ ! -f "$HOME/.vimrc" ]; then
-  ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
-fi;
-
-if [ ! -f "$HOME/.tmux.conf" ]; then
-  ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
-fi;
-
-if [ ! -f "$HOME/.gitconfig" ]; then
-  ln -s $HOME/dotfiles/.gitconfig $HOME/.gitconfig
-fi;
-
-if [ ! -f "$HOME/.vimrc" ]; then
-  ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  isMac="true"
+else
+  isMac="false"
 fi
+
+if ! command -v brew &>/dev/null; then
+  if [ -x /opt/homebrew/bin/brew ]; then
+    echo "Adding /opt/homebrew/bin to PATH..."
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x /usr/local/bin/brew ]; then
+    echo "Adding /usr/local/bin to PATH..."
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+fi
+
+if ! command -v brew &>/dev/null; then
+  echo "Homebrew is not installed. Please install Homebrew from https://brew.sh/ and rerun this script."
+  exit 1
+fi
+
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+[ ! -f "$HOME/.bashrc" ]    && ln -s "$HOME/dotfiles/.bashrc" "$HOME/.bashrc"    || echo ".bashrc exists; skipping."
+[ ! -f "$HOME/.vimrc" ]     && ln -s "$HOME/dotfiles/.vimrc" "$HOME/.vimrc"      || echo ".vimrc exists; skipping."
+[ ! -f "$HOME/.tmux.conf" ] && ln -s "$HOME/dotfiles/.tmux.conf" "$HOME/.tmux.conf"  || echo ".tmux.conf exists; skipping."
+[ ! -f "$HOME/.gitconfig" ] && ln -s "$HOME/dotfiles/.gitconfig" "$HOME/.gitconfig"  || echo ".gitconfig exists; skipping."
 
 if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
-  mkdir -p $HOME/.config/nvim
-  ln -s $HOME/dotfiles/.init.vim $HOME/.config/nvim/init.vim
-fi
-
-if [ ! -f "$HOME/.tmux.conf" ]; then
-  ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
-fi
-
-# Install dependencies
-if [ "$isMac" == "true" ]; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  brew install git
-  brew install vim
-  brew install tmux
-  brew install kubernetes-cli
-  brew install azure-cli
-  brew install node@16
-  brew install bash-completion@2
-  brew install nvim
-  brew install docker
-  brew install docker-compose
+  mkdir -p "$HOME/.config/nvim"
+  ln -s "$HOME/dotfiles/.init.vim" "$HOME/.config/nvim/init.vim"
+  echo "Created symlink for nvim init.vim"
 else
-  sudo apt install -y curl
-  # Setup kubectl repo
-  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-  echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-
-  # Setup nodejs repo
-  curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash
-
-  # Setup docker repo
-  sudo install -m 0755 -d /etc/apt/keyrings
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-  sudo chmod a+r /etc/apt/keyrings/docker.gpg
-  echo \
-  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-  sudo apt update
-  sudo apt install -y vim neovim tmux kubectl bash-completion nodejs docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin python3 dotnet-sdk-7.0
-  curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+  echo "nvim init.vim exists; skipping."
 fi
 
-# Install vim plugins
+if [ "$isMac" == "true" ]; then
+  # Install Homebrew if not in PATH (fresh install).
+  if ! command -v brew &>/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+  brew update
+  brew install git vim tmux kubernetes-cli azure-cli node@20 bash-completion@2 nvim docker docker-compose gh
+else
+  sudo apt update
+  sudo apt install -y curl vim tmux neovim git docker docker-compose python3 dotnet-sdk-7.0
+fi
+
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
-  git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+  git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
   vim +PluginInstall +qall
 fi
 
-# Install tmux plugins
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-  $HOME/.tmux/plugins/tpm/scripts/install_plugins.sh
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+  "$HOME/.tmux/plugins/tpm/scripts/install_plugins.sh"
 fi
 
-# Install completions
-sudo curl \
-  -L https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/bash/docker-compose \
-  -o /etc/bash_completion.d/docker-compose
-sudo curl \
-  -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker \
-  -o /etc/bash_completion.d/docker
-sudo curl \
-  -L https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion \
-  -o /etc/bash_completion.d/az
-sudo bash -c 'kubectl completion bash > /etc/bash_completion.d/kubectl'
+if [ "$isMac" == "false" ]; then
+  sudo curl -L https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+  sudo curl -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker -o /etc/bash_completion.d/docker
+  sudo curl -L https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -o /etc/bash_completion.d/az
+  sudo bash -c 'kubectl completion bash > /etc/bash_completion.d/kubectl'
+fi
 
-source $HOME/dotfiles/.bashrc
+if [ ! -f "$HOME/.exports_private" ]; then
+  echo "Warning: $HOME/.exports_private does not exist; creating an empty file."
+  touch "$HOME/.exports_private"
+fi
+
+source "$HOME/.bashrc"
+
+echo "Installation complete. You may need to log out and back in for all changes to take effect."
 

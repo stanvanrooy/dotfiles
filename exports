@@ -1,24 +1,56 @@
 #!/usr/bin/env bash
 
-export EDITOR="vim";
+# Environment Variables Setup
+# This file exports key environment variables for your shell.
+# It includes cross-platform adjustments for macOS and Linux.
+
+# Set the default editor.
+export EDITOR="vim"
+
+# Enable Python asyncio debugging.
 export PYTHONASYNCIODEBUG=1
 
-export DOTNET_ROOT="/usr/local/share/dotnet/x64/"
-export MANPAGER="less -X";
+# Set DOTNET_ROOT based on OS:
+if [[ "$(uname)" == "Darwin" ]]; then
+    # Typical Homebrew dotnet installation on macOS.
+    export DOTNET_ROOT="/usr/local/share/dotnet/x64/"
+else
+    # Example location for dotnet on Linux.
+    export DOTNET_ROOT="/usr/share/dotnet"
+fi
 
-export GPG_TTY=$(tty)
+# Set the manual pager.
+export MANPAGER="less -X"
 
-# Increase history size
-export HISTSIZE='32768';
-export HISTFILESIZE="${HISTSiZE}";
-# Ignore duplicates
-export HISTCONTROL="ignoreboth";
+# Set GPG_TTY for GPG agent (ensuring proper terminal usage).
+export GPG_TTY="$(tty)"
 
-export LANG='en_US.UTF-8';
-export LC_ALL='en_US.UTF-8';
+# Increase shell history size.
+export HISTSIZE=32768
+export HISTFILESIZE="$HISTSIZE"
+export HISTCONTROL="ignoreboth"  # Ignore duplicate or space-prefixed commands.
 
+# Set locale.
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# Clip-related directories.
 export CLIP_DIR="$HOME/Videos/Clips"
 export CLIP_DATA="$HOME/.config/clip/data"
-export LSCOLORS="gxBxhxDxfxhxhxhxhxcxcx"
 
-export ANDROID_HOME="$HOME/Library/Android/sdk"
+# Set file/directory color settings:
+if [[ "$(uname)" == "Darwin" ]]; then
+    # macOS uses LSCOLORS (BSD ls).
+    export LSCOLORS="gxBxhxDxfxhxhxhxhxcxcx"
+else
+    # Linux (GNU ls) typically uses LS_COLORS.
+    export LS_COLORS="di=1;34:ln=1;36:so=1;32:pi=1;33:ex=1;31:bd=1;33:cd=1;33:su=0;41:sg=0;46:tw=0;42:ow=0;43"
+fi
+
+# Set ANDROID_HOME based on OS:
+if [[ "$(uname)" == "Darwin" ]]; then
+    export ANDROID_HOME="$HOME/Library/Android/sdk"
+else
+    export ANDROID_HOME="$HOME/Android/Sdk"
+fi
+

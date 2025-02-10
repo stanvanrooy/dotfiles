@@ -1,38 +1,96 @@
 #!/usr/bin/env bash
-complete -F __start_kubectl k
+# Bash Completions for various tools.
+# This file configures completions for:
+#   - kubectl (alias 'k')
+#   - npm
+#   - dotnet
+#   - make (via Makefile targets)
+#   - eim (if available)
+#   - git (if available)
+#
+# It includes checks for command availability and accounts for differences
+# between macOS and Linux installation paths.
 
-source <(npm completion)
+# ------------------------------
+# 1. Kubectl Completion for alias "k"
+# ------------------------------
+if command -v kubectl &>/dev/null; then
+  # Ensure kubectl's bash completion is loaded. If __start_kubectl isn't
+  # already defined, load it from the output of "kubectl completion bash".
+  if ! type __start_kubectl &>/dev/null; then
+    source <(kubectl completion bash)
+  fi
+  complete -F __start_kubectl k
+fi
 
-function _dotnet_bash_complete() {
-  local word=${COMP_WORDS[COMP_CWORD]}
+# ------------------------------
+# 2. NPM Completion
+# ------------------------------
+if command -v npm &>/dev/null; then
+  # Load npm completion using process substitution.
+  source <(npm completion)
+fi
+
+# ------------------------------
+# 3. Dotnet Completion
+# ------------------------------
+_dotnet_bash_complete() {
+  local word="${COMP_WORDS[COMP_CWORD]}"
   local completions
+
+  # Only proceed if the dotnet command is available.
+  if ! command -v dotnet &>/dev/null; then
+    return
+  fi
+
+  # Retrieve completions via dotnet.
   completions="$(dotnet complete --position "${COMP_POINT}" "${COMP_LINE}" 2>/dev/null)"
   if [ $? -ne 0 ]; then
     completions=""
   fi
   COMPREPLY=( $(compgen -W "$completions" -- "$word") )
 }
-complete -f -F _dotnet_bash_complete dotnet
+if command -v dotnet &>/dev/null; then
+  complete -f -F _dotnet_bash_complete dotnet
+fi
 
-function _makefile_complete {
-    local curr_arg;
-    local targets;
-
-    targets=''
-    if [[ -e "$(pwd)/Makefile" ]]; then
-        targets=$( \
-            grep -oE '^[a-zA-Z0-9_-]+:' Makefile \
-            | sed 's/://' \
-            | tr '\n' ' ' \
-        )
-    fi
-
-    curr_arg=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "${targets[@]}" -- $curr_arg ) );
+# ------------------------------
+# 4. Makefile Completion
+# ------------------------------
+_makefile_complete() {
+  local curr_arg
+  local targets=""
+  # If a Makefile exists in the current directory, parse its targets.
+  if [[ -e "$(pwd)/Makefile" ]]; then
+    targets=$(grep -oE '^[a-zA-Z0-9_-]+:' Makefile | sed 's/://g' | tr '\n' ' ')
+  fi
+  curr_arg="${COMP_WORDS[COMP_CWORD]}"
+  COMPREPLY=( $(compgen -W "$targets" -- "$curr_arg") )
 }
 complete -F _makefile_complete make
-complete -F __start_eim eim
 
-source /usr/share/bash-completion/completions/git
-__git_complete g __git_main
+# ------------------------------
+# 5. EIM Completion (Optional)
+# ------------------------------
+# Only register if __start_eim is already defined.
+if type __start_eim &>/dev/null; then
+  complete -F __start_eim eim
+fi
+
+# ------------------------------
+# 6. Git Completion
+# ------------------------------
+# Try to source Git completions from common locations.
+if [ -f /usr/share/bash-completion/completions/git ]; then
+  source /usr/share/bash-completion/completions/git
+elif [ -f /usr/local/etc/bash_completion.d/git ]; then
+  source /usr/local/etc/bash_completion.d/git
+elif [ -f /opt/homebrew/etc/bash_completion.d/git ]; then
+  source /opt/homebrew/etc/bash_completion.d/git
+fi
+
+# If the __git_complete function is available, register a short alias "g" for git.
+if type __git_complete &>/dev/null; then
+  __git_complete g __git_main
+fi
 
