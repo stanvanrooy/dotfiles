@@ -24,8 +24,6 @@ Plugin 'ap/vim-buftabline'
 " fuzzy finder 
 Plugin 'kien/ctrlp.vim'
 
-Plugin 'github/copilot.vim'
-
 " Org mode
 Plugin 'jceb/vim-orgmode'
 Plugin 'vim-scripts/utl.vim'
@@ -36,7 +34,6 @@ Plugin 'neovim/nvim-lspconfig'
 Plugin 'williamboman/mason.nvim'
 Plugin 'williamboman/mason-lspconfig.nvim'
 Plugin 'ms-jpq/coq_nvim'
-Plugin 'ms-jpq/coq.thirdparty'
 
 Plugin 'nvim-lua/plenary.nvim'
 Plugin 'Civitasv/cmake-tools.nvim'
@@ -135,5 +132,4 @@ let g:org_agenda_files=['~/org/todo.org']
 let g:utl_cfg_hdl_scm_http_system = ":call system('open %u')"
 
 set autochdir
-set browsedir=current
 
