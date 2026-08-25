@@ -46,6 +46,16 @@ if [ "$isMac" == "true" ]; then
   fi
   brew update
   brew install git tmux kubernetes-cli azure-cli node@20 bash-completion@2 nvim docker docker-compose gh
+  brew install koekeishiya/formulae/yabai koekeishiya/formulae/skhd
+
+  # yabai/skhd are macOS-only; their configs live outside the shared symlink block.
+  [ ! -f "$HOME/.yabairc" ] && ln -s "$HOME/dotfiles/.yabairc" "$HOME/.yabairc" || echo ".yabairc exists; skipping."
+  [ ! -f "$HOME/.skhdrc" ]  && ln -s "$HOME/dotfiles/.skhdrc" "$HOME/.skhdrc"   || echo ".skhdrc exists; skipping."
+
+  # Restart so the linked configs take effect. Needs Accessibility permission
+  # (System Settings > Privacy & Security > Accessibility) on first run.
+  yabai --restart-service 2>/dev/null || yabai --start-service || echo "yabai service not started; grant Accessibility and run: yabai --start-service"
+  skhd  --restart-service 2>/dev/null || skhd  --start-service || echo "skhd service not started; grant Accessibility and run: skhd --start-service"
 else
   sudo apt update
   sudo apt install -y curl tmux neovim git docker docker-compose python3 dotnet-sdk-7.0
