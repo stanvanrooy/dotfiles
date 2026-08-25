@@ -61,7 +61,7 @@ set path+=**
 set wildmenu
 set wildignore+=*.swp,*.swo,bin/*,obj/*
 
-colorscheme gruvbox
+silent! colorscheme gruvbox
 
 " Use the OS's clipboard
 set clipboard+=unnamedplus
