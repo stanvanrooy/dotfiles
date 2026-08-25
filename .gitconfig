@@ -3,7 +3,7 @@
 	name = Stan van Rooy
 	signingkey = 67BDC566B8CF8C47
 [core]
-	editor = vim
+	editor = nvim
 	excludesFile = $HOME/dotfiles/.gitignore.global
 [push]
 	default = current

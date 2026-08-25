@@ -45,15 +45,15 @@ if [ "$isMac" == "true" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
   brew update
-  brew install git vim tmux kubernetes-cli azure-cli node@20 bash-completion@2 nvim docker docker-compose gh
+  brew install git tmux kubernetes-cli azure-cli node@20 bash-completion@2 nvim docker docker-compose gh
 else
   sudo apt update
-  sudo apt install -y curl vim tmux neovim git docker docker-compose python3 dotnet-sdk-7.0
+  sudo apt install -y curl tmux neovim git docker docker-compose python3 dotnet-sdk-7.0
 fi
 
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
   git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
-  vim +PluginInstall +qall
+  nvim +PluginInstall +qall
 fi
 
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then

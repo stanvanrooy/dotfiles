@@ -5,7 +5,7 @@
 # It includes cross-platform adjustments for macOS and Linux.
 
 # Set the default editor.
-export EDITOR="vim"
+export EDITOR="nvim"
 
 # Enable Python asyncio debugging.
 export PYTHONASYNCIODEBUG=1
