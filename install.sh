@@ -25,6 +25,7 @@ fi
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 [ ! -f "$HOME/.bashrc" ]    && ln -s "$HOME/dotfiles/.bashrc" "$HOME/.bashrc"    || echo ".bashrc exists; skipping."
+[ ! -f "$HOME/.bash_profile" ] && ln -s "$HOME/dotfiles/.bash_profile" "$HOME/.bash_profile" || echo ".bash_profile exists; skipping."
 [ ! -f "$HOME/.vimrc" ]     && ln -s "$HOME/dotfiles/.vimrc" "$HOME/.vimrc"      || echo ".vimrc exists; skipping."
 [ ! -f "$HOME/.tmux.conf" ] && ln -s "$HOME/dotfiles/.tmux.conf" "$HOME/.tmux.conf"  || echo ".tmux.conf exists; skipping."
 [ ! -f "$HOME/.gitconfig" ] && ln -s "$HOME/dotfiles/.gitconfig" "$HOME/.gitconfig"  || echo ".gitconfig exists; skipping."
