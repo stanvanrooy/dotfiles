@@ -19,6 +19,7 @@ fi
 
 git config --global core.excludesFile '$HOME/dotfiles/.gitignore.global'
 
-#if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-#    tmux attach -t default || tmux new -s default
-#fi
+# Always land in tmux. Reuses a detached session when one is free and prunes
+# idle ones first, so sessions never pile up. Set TMUX_NO_AUTO=1 to opt out.
+# Keep this last: it exec's, so nothing below it would run.
+tmux_autostart

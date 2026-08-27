@@ -256,3 +256,128 @@ function main() {
   git checkout -b main
 }
 
+
+# -----------------------------------------------------------------------------
+# tmux Session Hygiene
+# -----------------------------------------------------------------------------
+# A session counts as "busy" when any pane runs something other than a plain
+# shell, so pruning never kills a build, a server or an editor.
+function _tmux_session_busy() {
+  local cmd
+  while read -r cmd; do
+    case "$cmd" in
+      bash|-bash|zsh|-zsh|sh|-sh|fish|tmux|"") ;;
+      *) return 0 ;;
+    esac
+  done < <(tmux list-panes -s -t "=$1" -F '#{pane_current_command}' 2>/dev/null)
+  return 1
+}
+
+function _tmux_human_age() {
+  # Seconds -> compact age, e.g. 3h, 4d, 12m.
+  local s=$1
+  if   (( s < 60 ));    then echo "${s}s"
+  elif (( s < 3600 ));  then echo "$((s / 60))m"
+  elif (( s < 86400 )); then echo "$((s / 3600))h"
+  else                       echo "$((s / 86400))d"
+  fi
+}
+
+function tls() {
+  # List tmux sessions with attach state and idle time.
+  if ! command -v tmux &>/dev/null; then
+    echo "tmux is not installed."
+    return 1
+  fi
+  if ! tmux has-session 2>/dev/null; then
+    echo "no tmux sessions"
+    return 0
+  fi
+  local now name wins att act state
+  now=$(date +%s)
+  while IFS='|' read -r name wins att act; do
+    if [ "$att" != "0" ]; then
+      state="attached"
+    else
+      state="detached $(_tmux_human_age $((now - act)))"
+      _tmux_session_busy "$name" && state="$state, busy"
+    fi
+    printf '  %-20s %2s window(s)  %s\n' "$name" "$wins" "$state"
+  done < <(tmux list-sessions -F '#{session_name}|#{session_windows}|#{session_attached}|#{session_activity}' 2>/dev/null)
+}
+
+function tprune() {
+  # Kill detached, idle tmux sessions.
+  # Usage: tprune [-f] [max-idle]   e.g. tprune, tprune 2d, tprune -f 6h
+  #   no max-idle : every detached session
+  #   -f          : also kill sessions with something running in them
+  command -v tmux &>/dev/null || return 0
+  tmux has-session 2>/dev/null || { [ -n "$_TMUX_PRUNE_QUIET" ] || echo "no tmux sessions"; return 0; }
+
+  local force=""
+  if [ "$1" = "-f" ]; then force=1; shift; fi
+
+  local spec="${1:-0}" secs now killed=0 name att act
+  case "$spec" in
+    *d) secs=$(( ${spec%d} * 86400 )) ;;
+    *h) secs=$(( ${spec%h} * 3600 )) ;;
+    *m) secs=$(( ${spec%m} * 60 )) ;;
+    *s) secs=${spec%s} ;;
+    *)  secs=$spec ;;
+  esac
+  now=$(date +%s)
+
+  while IFS='|' read -r att act name; do
+    [ "$att" = "0" ] || continue
+    (( now - act >= secs )) || continue
+    if [ -z "$force" ] && _tmux_session_busy "$name"; then
+      [ -n "$_TMUX_PRUNE_QUIET" ] || echo "tmux: kept '$name' (busy; -f to force)"
+      continue
+    fi
+    if tmux kill-session -t "=$name" 2>/dev/null; then
+      [ -n "$_TMUX_PRUNE_QUIET" ] || echo "tmux: pruned '$name'"
+      killed=$((killed + 1))
+    fi
+  done < <(tmux list-sessions -F '#{session_attached}|#{session_activity}|#{session_name}' 2>/dev/null)
+
+  if [ "$killed" -eq 0 ] && [ -z "$_TMUX_PRUNE_QUIET" ]; then
+    echo "tmux: nothing to prune"
+  fi
+}
+
+function _tmux_free_name() {
+  # First unused name in the series main, main-2, main-3, ...
+  local n=1 name=main
+  while tmux has-session -t "=$name" 2>/dev/null; do
+    n=$((n + 1))
+    name="main-$n"
+  done
+  printf '%s' "$name"
+}
+
+function tmux_autostart() {
+  # Drop the shell straight into tmux, reusing a detached session when there is
+  # one so sessions never accumulate past the number of terminals actually used.
+  case $- in *i*) ;; *) return 0 ;; esac       # interactive only
+  [ -z "$TMUX" ] || return 0                   # already inside tmux
+  [ -t 1 ] || return 0                         # real terminal only
+  [ "$TERM" != "dumb" ] || return 0
+  command -v tmux &>/dev/null || return 0
+  [ -z "$TMUX_NO_AUTO" ] || return 0           # escape hatch: TMUX_NO_AUTO=1
+
+  # Editors and agent harnesses spawn shells for us; leave those alone.
+  case "$TERM_PROGRAM" in vscode|WarpTerminal) return 0 ;; esac
+  [ -z "$CLAUDECODE$INSIDE_EMACS$VIMRUNTIME$NVIM" ] || return 0
+
+  _TMUX_PRUNE_QUIET=1 tprune 1d
+
+  local session
+  session=$(tmux list-sessions -F '#{session_attached}|#{session_created}|#{session_name}' 2>/dev/null \
+    | awk -F'|' '$1 == 0' | sort -t'|' -k2,2n | head -1 | cut -d'|' -f3-)
+
+  if [ -n "$session" ]; then
+    exec tmux attach-session -t "=$session"
+  else
+    exec tmux new-session -s "$(_tmux_free_name)"
+  fi
+}

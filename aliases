@@ -58,12 +58,6 @@ alias sudo='sudo '
 # Functions
 alias urlencode='python3 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
-# Elfsquad
-eqdir=/home/stan/elfsquad/devstack
-if [ -d $eqdir ]; then
-  source $eqdir/.aliases $eqdir/..
-fi
-
 # Miscenallenous
 alias bashrc="nvim ~/dotfiles/.bashrc"
 alias c="clear"
@@ -73,6 +67,4 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "${method}"="lwp-request -m '${method}'"
 done
 
-alias elfsquad="node /home/stan/elfsquad/elfsquad-cli/dist/index.js"
-
-
+alias bb="cd ~/bluebarry"

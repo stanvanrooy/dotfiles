@@ -1,6 +1,6 @@
 # --- Launching & Closing Windows ---
 # Open terminal (ensure iTerm is in Applications folder)
-cmd - return : open -a "iTerm.app"
+cmd + shift - return : open -a "iTerm.app"
 
 # Close focused window
 cmd + shift - q : yabai -m window --close
@@ -23,7 +23,7 @@ cmd + shift - l : yabai -m window --swap east
 cmd + shift - space : yabai -m window --toggle float
 
 # Toggle fullscreen
-cmd - f : yabai -m window --toggle zoom-fullscreen
+alt - f : yabai -m window --toggle zoom-fullscreen
 
 # --- Workspace Management ---
 # Focus spaces 1-10 (requires yabai scripting additions)
